@@ -10,8 +10,11 @@ namespace StockFighter
     {
         static void Main(string[] args)
         {
-            APIWrapper.CheckVenue("SZEEX");
-            APIWrapper.CheckVenue("garbage");
+            var venue = "CTHKEX";
+            Console.WriteLine(venue + " is up? " + APIWrapper.CheckVenue("CTHKEX"));
+            Console.WriteLine("Garbage is up? " + APIWrapper.CheckVenue("garbage"));
+
+            Console.ReadKey(true);
         }
     }
 }

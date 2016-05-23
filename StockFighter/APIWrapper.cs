@@ -25,12 +25,13 @@ namespace StockFighter
 
             var response = client.Execute<HeartbeatResponse>(request);
 
-            var heartbeatResponse = response.Data;
-
-            if (heartbeatResponse != null)
+            if (IsSuccessful(response))
             {
+                var heartbeatResponse = response.Data;
+
                 return heartbeatResponse.ok;
             }
+
             else
             {
                 return false;
@@ -45,12 +46,13 @@ namespace StockFighter
 
             var response = client.Execute<VenueHeartbeatResponse>(request);
 
-            var venueResp = response.Data;
-
-            if (venueResp != null)
+            if (IsSuccessful(response))
             {
+                var venueResp = response.Data;
+
                 return venueResp.ok;
             }
+
             else
             {
                 return false;
@@ -88,7 +90,7 @@ namespace StockFighter
 
         private static bool IsSuccessful(IRestResponse response)
         {
-            return false;
+            return response.ResponseStatus == ResponseStatus.Completed;
         }
 
 
