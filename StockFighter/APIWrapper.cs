@@ -81,6 +81,8 @@ namespace StockFighter
             }
         }
 
+        
+
         #endregion
         #region Privates
 
@@ -118,6 +120,9 @@ namespace StockFighter
                 case Command.CheckVenue:
                     cmdString = "venues/{0}/heartbeat";
                     break;
+                case Command.GetStocks:
+                    cmdString = "venues/{0}/stocks";
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -145,10 +150,6 @@ namespace StockFighter
     public class HeartbeatResponse : APIResponse
     {
         /// <summary>
-        /// Heartbeat was heard or not.
-        /// </summary>
-        public bool ok { get; set; }
-        /// <summary>
         /// Error text (if no error, then empty).
         /// </summary>
         public string error { get; set; }
@@ -160,20 +161,46 @@ namespace StockFighter
     public class VenueHeartbeatResponse : APIResponse
     {
         /// <summary>
-        /// Venue heartbeat was heard or not.
-        /// </summary>
-        public bool ok { get; set; }
-        /// <summary>
         /// Venue that heartbeat was queried for.
         /// </summary>
         public string venue { get; set; }
     }
 
     /// <summary>
+    /// Deserialized response from a GetStocks command.
+    /// </summary>
+    public class VenueStocks : APIResponse
+    {
+        /// <summary>
+        /// List of stocks in the venue.
+        /// </summary>
+        public VenueStock[] symbols { get; set; }
+    }
+
+    /// <summary>
+    /// Deserialized stocks from a GetStocks command.
+    /// </summary>
+    public class VenueStock
+    {
+        /// <summary>
+        /// The name of the stock.
+        /// </summary>
+        public string name { get; set; }
+        /// <summary>
+        /// The symbol of the stock.
+        /// </summary>
+        public string symbol { get; set; }
+    }
+
+    /// <summary>
     /// Base class for all responses. Should be used for commonalities.
     /// </summary>
-    private class APIResponse
+    public class APIResponse
     {
+        /// <summary>
+        /// Command was received correctly.
+        /// </summary>
+        public bool ok { get; set; }
         /// <summary>
         /// Error text. If no error, will be an empty string.
         /// </summary>
@@ -192,7 +219,11 @@ namespace StockFighter
         /// <summary>
         /// Checks if a venue is up.
         /// </summary>
-        CheckVenue
+        CheckVenue,
+        /// <summary>
+        /// Gets a list of stocks on a particular venue.
+        /// </summary>
+        GetStocks
     }
 
 }

@@ -10,8 +10,8 @@ namespace StockFighter
     {
         static void Main(string[] args)
         {
-            var venue = "CTHKEX";
-            Console.WriteLine(venue + " is up? " + APIWrapper.CheckVenue("CTHKEX"));
+            var venue = "AIBEX";
+            Console.WriteLine(venue + " is up? " + APIWrapper.CheckVenue(venue));
             Console.WriteLine("Garbage is up? " + APIWrapper.CheckVenue("garbage"));
 
             Console.ReadKey(true);
