@@ -81,6 +81,33 @@ namespace StockFighter
             }
         }
 
+        /// <summary>
+        /// Provides a list of stocks for the supplied venue.
+        /// </summary>
+        /// <param name="venue">The venue to find stocks for.</param>
+        /// <returns>Returns a VenueStocks response with an array of VenueStock.</returns>
+        public static VenueStocks GetStocks(string venue)
+        {
+            var client = getClient();
+
+            var commandString = String.Format(GetCommand(Command.GetStocks), venue);
+
+            var request = new RestRequest(commandString);
+
+            var response = client.Execute<VenueStocks>(request);
+
+            if (IsSuccessful(response))
+            {
+                var venues = response.Data;
+
+                return venues;
+            }
+
+            else 
+            {
+                throw new ArgumentException("Venue \"" + venue + "\" does not exist.");
+            }
+        }
         
 
         #endregion
@@ -174,7 +201,7 @@ namespace StockFighter
         /// <summary>
         /// List of stocks in the venue.
         /// </summary>
-        public VenueStock[] symbols { get; set; }
+        public List<VenueStock> symbols { get; set; }
     }
 
     /// <summary>

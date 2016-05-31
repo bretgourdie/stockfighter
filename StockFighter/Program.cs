@@ -11,8 +11,23 @@ namespace StockFighter
         static void Main(string[] args)
         {
             var venue = "AIBEX";
-            Console.WriteLine(venue + " is up? " + APIWrapper.CheckVenue(venue));
-            Console.WriteLine("Garbage is up? " + APIWrapper.CheckVenue("garbage"));
+
+            try
+            {
+                var stocks = APIWrapper.GetStocks(venue);
+
+                Console.WriteLine("Stocks for venue \"" + venue + "\":");
+
+                foreach (var stock in stocks.symbols)
+                {
+                    Console.WriteLine("\tStock: " + stock.name + " (" + stock.symbol + ")");
+                }
+            }
+
+            catch (ArgumentException)
+            {
+                Console.WriteLine("No stocks found for venue \"" + venue + "\".");
+            }
 
             Console.ReadKey(true);
         }
