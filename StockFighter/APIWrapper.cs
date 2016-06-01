@@ -109,6 +109,11 @@ namespace StockFighter
             }
         }
 
+        public static Orderbook GetOrderbook(string venue, string stock)
+        {
+
+        }
+
         #endregion
         #region Privates
 
@@ -221,7 +226,7 @@ namespace StockFighter
     /// <summary>
     /// Deserialized response from a <c ref="GetOrderbook"/> command.
     /// </summary>
-    public class OrderBook
+    public class Orderbook
     {
         /// <summary>
         /// The venue of the stock.
