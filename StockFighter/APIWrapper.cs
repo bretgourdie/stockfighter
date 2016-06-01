@@ -108,7 +108,6 @@ namespace StockFighter
                 throw new ArgumentException("Venue \"" + venue + "\" does not exist.");
             }
         }
-        
 
         #endregion
         #region Privates
@@ -220,6 +219,52 @@ namespace StockFighter
     }
 
     /// <summary>
+    /// Deserialized response from a <c ref="GetOrderbook"/> command.
+    /// </summary>
+    public class OrderBook
+    {
+        /// <summary>
+        /// The venue of the stock.
+        /// </summary>
+        public string venue { get; set; }
+        /// <summary>
+        /// The stock's symbol.
+        /// </summary>
+        public string symbol { get; set; }
+        /// <summary>
+        /// The list of bids (buys) for the stock.
+        /// </summary>
+        public List<Order> bids { get; set; }
+        /// <summary>
+        /// The list of asks (sells) for the stock.
+        /// </summary>
+        public List<Order> asks { get; set; }
+        /// <summary>
+        /// The timestamp the orderbook was retrieved.
+        /// </summary>
+        public DateTime ts { get; set; }
+    }
+
+    /// <summary>
+    /// Deserialized representation of an order (bid or ask).
+    /// </summary>
+    public class Order
+    {
+        /// <summary>
+        /// The price of the order.
+        /// </summary>
+        public int price { get; set; }
+        /// <summary>
+        /// The quantity of the order.
+        /// </summary>
+        public int qty { get; set; }
+        /// <summary>
+        /// Is this order a buy (bid) or a sell (ask)?
+        /// </summary>
+        public bool isBuy { get; set; }
+    }
+
+    /// <summary>
     /// Base class for all responses. Should be used for commonalities.
     /// </summary>
     public class APIResponse
@@ -250,7 +295,11 @@ namespace StockFighter
         /// <summary>
         /// Gets a list of stocks on a particular venue.
         /// </summary>
-        GetStocks
+        GetStocks,
+        /// <summary>
+        /// Gets a list of bids and asks on a particular stock.
+        /// </summary>
+        GetOrderbook
     }
 
 }
