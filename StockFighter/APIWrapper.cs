@@ -123,6 +123,10 @@ namespace StockFighter
             {
                 var orderbook = response.Data;
 
+                orderbook.asks = orderbook.asks ?? new List<Order>();
+
+                orderbook.bids = orderbook.bids ?? new List<Order>();
+
                 return orderbook;
             }
 
@@ -280,7 +284,7 @@ namespace StockFighter
         /// <summary>
         /// The price of the order.
         /// </summary>
-        public int price { get; set; }
+        public decimal price { get; set; }
         /// <summary>
         /// The quantity of the order.
         /// </summary>
