@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockFighter", "StockFighter\StockFighter.csproj", "{EF50A602-9E1D-4554-83A5-54E74805F47A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockFighter Tests", "StockFighter Tests\StockFighter Tests.csproj", "{277719A0-EB80-4934-93C7-EE6081CE1C23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EF50A602-9E1D-4554-83A5-54E74805F47A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF50A602-9E1D-4554-83A5-54E74805F47A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF50A602-9E1D-4554-83A5-54E74805F47A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{277719A0-EB80-4934-93C7-EE6081CE1C23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{277719A0-EB80-4934-93C7-EE6081CE1C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{277719A0-EB80-4934-93C7-EE6081CE1C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{277719A0-EB80-4934-93C7-EE6081CE1C23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
