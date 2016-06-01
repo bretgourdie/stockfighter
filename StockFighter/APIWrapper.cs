@@ -157,6 +157,23 @@ namespace StockFighter
             return client;
         }
 
+        private static IRestResponse<TClass> GetResponse<TClass>(
+            Command command, 
+            string[] args) where TClass new()
+        {
+            var client = getClient();
+
+            var rawCommandString = GetCommand(command);
+
+            var commandString = String.Format(rawCommandString, args);
+
+            var request = new RestRequest(commandString);
+
+            IRestResponse<TClass> response = client.Execute<TClass>(request);
+
+
+        }
+
         /// <summary>
         /// Translation matrix for a command enum to the URL.
         /// </summary>
