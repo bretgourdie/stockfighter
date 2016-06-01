@@ -173,6 +173,9 @@ namespace StockFighter
                 case Command.GetStocks:
                     cmdString = "venues/{0}/stocks";
                     break;
+                case Command.GetOrderbook:
+                    cmdString = "venues/{0}/stocks/{1}";
+                    break;
                 default:
                     throw new NotImplementedException();
             }
