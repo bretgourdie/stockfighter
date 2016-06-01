@@ -108,7 +108,40 @@ namespace StockFighter
                 throw new ArgumentException("Venue \"" + venue + "\" does not exist.");
             }
         }
-        
+
+        /// <summary>
+        /// Gets the Orderbook for a particular stock.
+        /// </summary>
+        /// <param name="venue">The venue for a particular stock.</param>
+        /// <param name="stock">The stock to obtain an orderbook for.</param>
+        /// <returns>Returns an OrderBook reponse with an array of asks and bids.</returns>
+        public static Orderbook GetOrderbook(string venue, string stock)
+        {
+            var client = getClient();
+
+            var commandString = String.Format(GetCommand(Command.GetOrderbook), venue, stock);
+
+            var request = new RestRequest(commandString);
+
+            var response = client.Execute<Orderbook>(request);
+
+            if (IsSuccessful(response))
+            {
+                var orderbook = response.Data;
+
+                orderbook.asks = orderbook.asks ?? new List<Order>();
+
+                orderbook.bids = orderbook.bids ?? new List<Order>();
+
+                return orderbook;
+            }
+
+            else
+            {
+                throw new ArgumentException("Stock \"" + stock + "\" in venue \""
+                    + venue + "\" does not exist.");
+            }
+        }
 
         #endregion
         #region Privates
@@ -149,6 +182,9 @@ namespace StockFighter
                     break;
                 case Command.GetStocks:
                     cmdString = "venues/{0}/stocks";
+                    break;
+                case Command.GetOrderbook:
+                    cmdString = "venues/{0}/stocks/{1}";
                     break;
                 default:
                     throw new NotImplementedException();
@@ -220,6 +256,52 @@ namespace StockFighter
     }
 
     /// <summary>
+    /// Deserialized response from a <c ref="GetOrderbook"/> command.
+    /// </summary>
+    public class Orderbook
+    {
+        /// <summary>
+        /// The venue of the stock.
+        /// </summary>
+        public string venue { get; set; }
+        /// <summary>
+        /// The stock's symbol.
+        /// </summary>
+        public string symbol { get; set; }
+        /// <summary>
+        /// The list of bids (buys) for the stock.
+        /// </summary>
+        public List<Order> bids { get; set; }
+        /// <summary>
+        /// The list of asks (sells) for the stock.
+        /// </summary>
+        public List<Order> asks { get; set; }
+        /// <summary>
+        /// The timestamp the orderbook was retrieved.
+        /// </summary>
+        public DateTime ts { get; set; }
+    }
+
+    /// <summary>
+    /// Deserialized representation of an order (bid or ask).
+    /// </summary>
+    public class Order
+    {
+        /// <summary>
+        /// The price of the order.
+        /// </summary>
+        public decimal price { get; set; }
+        /// <summary>
+        /// The quantity of the order.
+        /// </summary>
+        public int qty { get; set; }
+        /// <summary>
+        /// Is this order a buy (bid) or a sell (ask)?
+        /// </summary>
+        public bool isBuy { get; set; }
+    }
+
+    /// <summary>
     /// Base class for all responses. Should be used for commonalities.
     /// </summary>
     public class APIResponse
@@ -250,7 +332,11 @@ namespace StockFighter
         /// <summary>
         /// Gets a list of stocks on a particular venue.
         /// </summary>
-        GetStocks
+        GetStocks,
+        /// <summary>
+        /// Gets a list of bids and asks on a particular stock.
+        /// </summary>
+        GetOrderbook
     }
 
 }
