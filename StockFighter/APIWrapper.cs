@@ -111,7 +111,26 @@ namespace StockFighter
 
         public static Orderbook GetOrderbook(string venue, string stock)
         {
+            var client = getClient();
 
+            var commandString = String.Format(GetCommand(Command.GetOrderbook), venue, stock);
+
+            var request = new RestRequest(commandString);
+
+            var response = client.Execute<Orderbook>(request);
+
+            if (IsSuccessful(response))
+            {
+                var orderbook = response.Data;
+
+                return orderbook;
+            }
+
+            else
+            {
+                throw new ArgumentException("Stock \"" + stock + "\" in venue \""
+                    + venue + "\" does not exist.");
+            }
         }
 
         #endregion
