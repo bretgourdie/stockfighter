@@ -250,7 +250,7 @@ namespace StockFighter
     /// <summary>
     /// Deserialized representation of an order (bid or ask).
     /// </summary>
-    public class Order : APIResponse
+    public class Order
     {
         /// <summary>
         /// The price of the order.
