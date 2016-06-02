@@ -85,9 +85,9 @@ namespace StockFighter
 
             if(orderbook != null)
             { 
-                orderbook.asks = orderbook.asks ?? new List<Order>();
+                orderbook.asks = orderbook.asks ?? new List<Orderbook.Request>();
 
-                orderbook.bids = orderbook.bids ?? new List<Order>();
+                orderbook.bids = orderbook.bids ?? new List<Orderbook.Request>();
 
                 return orderbook;
             }
@@ -236,35 +236,42 @@ namespace StockFighter
         /// <summary>
         /// The list of bids (buys) for the stock.
         /// </summary>
-        public List<Order> bids { get; set; }
+        public List<Orderbook.Request> bids { get; set; }
         /// <summary>
         /// The list of asks (sells) for the stock.
         /// </summary>
-        public List<Order> asks { get; set; }
+        public List<Orderbook.Request> asks { get; set; }
         /// <summary>
         /// The timestamp the orderbook was retrieved.
         /// </summary>
         public DateTime ts { get; set; }
+
+        /// <summary>
+        /// Deserialized representation of an orderbook request (bid or ask).
+        /// </summary>
+        internal class Request
+        {
+            /// <summary>
+            /// The price of the request.
+            /// </summary>
+            public decimal price { get; set; }
+            /// <summary>
+            /// The quantity of the request.
+            /// </summary>
+            public int qty { get; set; }
+            /// <summary>
+            /// Is this a request to buy (bid) or sell (ask)?
+            /// </summary>
+            public bool isBuy { get; set; }
+        }
     }
 
-    /// <summary>
-    /// Deserialized representation of an order (bid or ask).
-    /// </summary>
-    public class Order
+    public class Quote : APIResponse
     {
-        /// <summary>
-        /// The price of the order.
-        /// </summary>
-        public decimal price { get; set; }
-        /// <summary>
-        /// The quantity of the order.
-        /// </summary>
-        public int qty { get; set; }
-        /// <summary>
-        /// Is this order a buy (bid) or a sell (ask)?
-        /// </summary>
-        public bool isBuy { get; set; }
+
     }
+
+
 
     /// <summary>
     /// Base class for all responses. Should be used for commonalities.
