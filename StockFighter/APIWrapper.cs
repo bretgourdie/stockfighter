@@ -119,7 +119,7 @@ namespace StockFighter
         {
             var client = getClient();
 
-            var rawCommandString = GetCommand(command);
+            var rawCommandString = getCommand(command);
 
             var commandString = String.Format(rawCommandString, args);
 
@@ -141,7 +141,7 @@ namespace StockFighter
         /// Returns a command string with the parameters 
         /// ready to be replaced by String.Format.
         /// </returns>
-        private static string GetCommand(Command command)
+        private static string getCommand(Command command)
         {
             var cmdString = "";
 
