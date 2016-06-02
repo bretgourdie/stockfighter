@@ -157,9 +157,9 @@ namespace StockFighter
             return client;
         }
 
-        private static IRestResponse<TClass> GetResponse<TClass>(
+        private static T GetResponse<T>(
             Command command, 
-            string[] args) where TClass new()
+            string[] args) where T : new()
         {
             var client = getClient();
 
@@ -169,9 +169,9 @@ namespace StockFighter
 
             var request = new RestRequest(commandString);
 
-            IRestResponse<TClass> response = client.Execute<TClass>(request);
+            var response = client.Execute<T>(request);
 
-
+            return response.Data;
         }
 
         /// <summary>
