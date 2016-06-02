@@ -208,7 +208,7 @@ namespace StockFighter
     /// <summary>
     /// Deserialized stocks from a GetStocks command.
     /// </summary>
-    public class VenueStock
+    public class VenueStock : APIResponse
     {
         /// <summary>
         /// The name of the stock.
@@ -223,7 +223,7 @@ namespace StockFighter
     /// <summary>
     /// Deserialized response from a <c ref="GetOrderbook"/> command.
     /// </summary>
-    public class Orderbook
+    public class Orderbook : APIResponse
     {
         /// <summary>
         /// The venue of the stock.
