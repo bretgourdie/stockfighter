@@ -10,7 +10,7 @@ namespace StockFighter
     {
         static void Main(string[] args)
         {
-            var venue = "EYZEX";
+            var venue = "LBEX";
 
             try
             {
@@ -21,7 +21,16 @@ namespace StockFighter
                 foreach (var stock in stocks.symbols)
                 {
                     Console.WriteLine("\t" + stock.symbol + " (" + stock.name + ")");
-                    
+
+                    var quote = APIWrapper.GetQuote(venue, stock.symbol);
+
+                    Console.WriteLine("\tQuote:");
+                    Console.WriteLine("\t\tAsk: " + quote.ask);
+                    Console.WriteLine("\t\tBid: " + quote.bid);
+                    Console.WriteLine("\t\tTime: " + quote.quoteTime);
+                    Console.WriteLine("\t\tLast trade at: " + quote.lastTrade);
+                    Console.WriteLine("\n");
+
                     var orderbook = APIWrapper.GetOrderbook(venue, stock.symbol);
 
                     Console.WriteLine("\tBids: ");
