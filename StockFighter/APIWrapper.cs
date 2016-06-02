@@ -36,7 +36,7 @@ namespace StockFighter
         /// <returns>Returns true if the server is up; else, false.</returns>
         public static bool Heartbeat()
         {
-            var heartbeatResponse = GetResponse<HeartbeatResponse>(new string[] { });
+            var heartbeatResponse = GetResponse<Heartbeat>(new string[] { });
 
             return heartbeatResponse != null ? heartbeatResponse.ok : false;
         }
@@ -48,7 +48,7 @@ namespace StockFighter
         /// <returns>Returns true if the venue is available; else, false.</returns>
         public static bool CheckVenue(string venue)
         {
-            var venueResponse = GetResponse<VenueHeartbeatResponse>(new string[] { venue });
+            var venueResponse = GetResponse<VenueHeartbeat>(new string[] { venue });
 
             return venueResponse != null ? venueResponse.ok : false;
         }
@@ -143,8 +143,8 @@ namespace StockFighter
         {
             var switchDict = new Dictionary<Type, string>
             {
-                { typeof(HeartbeatResponse), "heartbeat" },
-                { typeof(VenueHeartbeatResponse), "venues/{0}/heartbeat" },
+                { typeof(Heartbeat), "heartbeat" },
+                { typeof(VenueHeartbeat), "venues/{0}/heartbeat" },
                 { typeof(VenueStocks), "venues/{0}/stocks" },
                 { typeof(Orderbook), "venues/{0}/stocks/{1}" }
             };
@@ -181,7 +181,7 @@ namespace StockFighter
     /// <summary>
     /// Deserialized response from a Heartbeat command.
     /// </summary>
-    public class HeartbeatResponse : APIResponse
+    public class Heartbeat : APIResponse
     {
         /// <summary>
         /// Error text (if no error, then empty).
@@ -192,7 +192,7 @@ namespace StockFighter
     /// <summary>
     /// Deserialized response from a CheckVenue command.
     /// </summary>
-    public class VenueHeartbeatResponse : APIResponse
+    public class VenueHeartbeat : APIResponse
     {
         /// <summary>
         /// Venue that heartbeat was queried for.
