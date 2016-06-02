@@ -48,23 +48,9 @@ namespace StockFighter
         /// <returns>Returns true if the venue is available; else, false.</returns>
         public static bool CheckVenue(string venue)
         {
-            var client = getClient();
+            var venueResponse = GetResponse<VenueHeartbeatResponse>(Command.CheckVenue, new string[] { venue });
 
-            var request = new RestRequest(String.Format(GetCommand(Command.CheckVenue), venue));
-
-            var response = client.Execute<VenueHeartbeatResponse>(request);
-
-            if (IsSuccessful(response))
-            {
-                var venueResp = response.Data;
-
-                return venueResp.ok;
-            }
-
-            else
-            {
-                return false;
-            }
+            return venueResponse != null ? venueResponse.ok : false;
         }
 
         /// <summary>
