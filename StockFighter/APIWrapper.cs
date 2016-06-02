@@ -99,6 +99,22 @@ namespace StockFighter
             }
         }
 
+        public static Quote GetQuote(string venue, string stock)
+        {
+            var quote = GetResponse<Quote>(new string[] { venue, stock });
+
+            if (quote != null)
+            {
+                return quote;
+            }
+
+            else
+            {
+                throw new ArgumentException("Stock \"" + stock + "\" in venue \""
+                    + venue + "\" does not exist.");
+            }
+        }
+
         #endregion
         #region Privates
 
