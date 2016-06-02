@@ -36,23 +36,9 @@ namespace StockFighter
         /// <returns>Returns true if the server is up; else, false.</returns>
         public static bool Heartbeat()
         {
-            var client = getClient();
+            var heartbeatResponse = GetResponse<HeartbeatResponse>(Command.HeartBeat, new string[] { });
 
-            var request = new RestRequest(GetCommand(Command.HeartBeat));
-
-            var response = client.Execute<HeartbeatResponse>(request);
-
-            if (IsSuccessful(response))
-            {
-                var heartbeatResponse = response.Data;
-
-                return heartbeatResponse.ok;
-            }
-
-            else
-            {
-                return false;
-            }
+            return heartbeatResponse != null ? heartbeatResponse.ok : false;
         }
 
         /// <summary>
