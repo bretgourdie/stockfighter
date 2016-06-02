@@ -10,7 +10,7 @@ namespace StockFighter
     {
         static void Main(string[] args)
         {
-            var venue = "AIBEX";
+            var venue = "EYZEX";
 
             try
             {
@@ -20,13 +20,27 @@ namespace StockFighter
 
                 foreach (var stock in stocks.symbols)
                 {
-                    Console.WriteLine("\tStock: " + stock.name + " (" + stock.symbol + ")");
+                    Console.WriteLine("\t" + stock.symbol + " (" + stock.name + ")");
+                    
+                    var orderbook = APIWrapper.GetOrderbook(venue, stock.symbol);
+
+                    Console.WriteLine("\tBids: ");
+                    foreach (var bid in orderbook.bids)
+                    {
+                        Console.WriteLine("\t\t" + bid.qty + " @ $" + bid.price);
+                    }
+
+                    Console.WriteLine("\n\tAsks: ");
+                    foreach (var ask in orderbook.asks)
+                    {
+                        Console.WriteLine("\t\t" + ask.qty + " @ $" + ask.price);
+                    }
                 }
             }
 
-            catch (ArgumentException)
+            catch (ArgumentException ex)
             {
-                Console.WriteLine("No stocks found for venue \"" + venue + "\".");
+                Console.WriteLine(ex.Message);
             }
 
             Console.ReadKey(true);
