@@ -339,6 +339,50 @@ namespace StockFighter
     }
 
     /// <summary>
+    /// Deserialized representation of an Order post.
+    /// </summary>
+    public class Order : APIPost
+    {
+        /// <summary>
+        /// The trading account you are trading for.
+        /// </summary>
+        public string account { get; set; }
+        /// <summary>
+        /// The venue to place the trade to.
+        /// </summary>
+        public string venue { get; set; }
+        /// <summary>
+        /// The stock symbol to place the trade in.
+        /// </summary>
+        public string stock { get; set; }
+        /// <summary>
+        /// The desired price. Ignored for market orders.
+        /// </summary>
+        public int price { get; set; }
+        /// <summary>
+        /// The desired quantity.
+        /// </summary>
+        public int qty { get; set; }
+        /// <summary>
+        /// Whether you want to buy or sell.
+        /// </summary>
+        /// <remarks>
+        /// To bid, use "buy". To ask, use "sell".
+        /// </remarks>
+        public string direction { get; set; }
+        /// <summary>
+        /// The order type.
+        /// </summary>
+        /// <remarks>
+        /// <list type="ul">
+        /// <item>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        public string orderType { get; set; }
+    }
+
+    /// <summary>
     /// Base class for all responses. Should be used for commonalities.
     /// </summary>
     public class APIResponse
