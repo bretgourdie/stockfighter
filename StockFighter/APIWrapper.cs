@@ -60,22 +60,14 @@ namespace StockFighter
         /// <returns>Returns a VenueStocks response with an array of VenueStock.</returns>
         public static VenueStocks GetStocks(string venue)
         {
-            var client = getClient();
+            var getStocksResponse = GetResponse<VenueStocks>(Command.GetStocks, new string[] { venue });
 
-            var commandString = String.Format(GetCommand(Command.GetStocks), venue);
-
-            var request = new RestRequest(commandString);
-
-            var response = client.Execute<VenueStocks>(request);
-
-            if (IsSuccessful(response))
+            if(getStocksResponse != null)
             {
-                var venues = response.Data;
-
-                return venues;
+                return getStocksResponse;
             }
 
-            else 
+            else
             {
                 throw new ArgumentException("Venue \"" + venue + "\" does not exist.");
             }
