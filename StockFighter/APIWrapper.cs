@@ -374,9 +374,39 @@ namespace StockFighter
         /// The order type.
         /// </summary>
         /// <remarks>
-        /// <list type="ul">
-        /// <item>
-        /// </item>
+        /// <list type="table">
+        ///     <listheader>
+        ///         <term>
+        ///         Limit Order
+        ///         </term>
+        ///         <description>
+        ///         
+        ///         </description>
+        ///     </listheader>
+        ///     <item>
+        ///         <term>
+        ///         </term>
+        ///         <description>
+        ///         </description>
+        ///     </item>
+        ///     <item>
+        ///         <term>
+        ///         </term>
+        ///         <description>
+        ///         </description>
+        ///     </item>
+        ///     <item>
+        ///         <term>
+        ///         </term>
+        ///         <description>
+        ///         </description>
+        ///     </item>
+        ///     <item>
+        ///         <term>
+        ///         </term>
+        ///         <description>
+        ///         </description>
+        ///     </item>
         /// </list>
         /// </remarks>
         public string orderType { get; set; }
