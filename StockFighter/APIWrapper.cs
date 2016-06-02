@@ -181,13 +181,7 @@ namespace StockFighter
     /// <summary>
     /// Deserialized response from a Heartbeat command.
     /// </summary>
-    public class Heartbeat : APIResponse
-    {
-        /// <summary>
-        /// Error text (if no error, then empty).
-        /// </summary>
-        public string error { get; set; }
-    }
+    public class Heartbeat : APIResponse { }
 
     /// <summary>
     /// Deserialized response from a CheckVenue command.
