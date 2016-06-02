@@ -81,18 +81,10 @@ namespace StockFighter
         /// <returns>Returns an OrderBook reponse with an array of asks and bids.</returns>
         public static Orderbook GetOrderbook(string venue, string stock)
         {
-            var client = getClient();
+            var orderbook = GetResponse<Orderbook>(Command.GetOrderbook, new string[] { venue, stock });
 
-            var commandString = String.Format(GetCommand(Command.GetOrderbook), venue, stock);
-
-            var request = new RestRequest(commandString);
-
-            var response = client.Execute<Orderbook>(request);
-
-            if (IsSuccessful(response))
-            {
-                var orderbook = response.Data;
-
+            if(orderbook != null)
+            { 
                 orderbook.asks = orderbook.asks ?? new List<Order>();
 
                 orderbook.bids = orderbook.bids ?? new List<Order>();
