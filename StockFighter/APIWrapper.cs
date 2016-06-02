@@ -266,7 +266,7 @@ namespace StockFighter
         /// <summary>
         /// Deserialized representation of an orderbook request (bid or ask).
         /// </summary>
-        internal class Request
+        public class Request
         {
             /// <summary>
             /// The price of the request.
