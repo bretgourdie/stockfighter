@@ -352,4 +352,12 @@ namespace StockFighter
         /// </summary>
         public string error { get; set; }
     }
+
+    /// <summary>
+    /// Base class for all Post requests. Should be used for commonalities.
+    /// </summary>
+    public class APIPost
+    {
+
+    }
 }
