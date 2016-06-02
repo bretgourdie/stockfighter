@@ -36,23 +36,9 @@ namespace StockFighter
         /// <returns>Returns true if the server is up; else, false.</returns>
         public static bool Heartbeat()
         {
-            var client = getClient();
+            var heartbeatResponse = GetResponse<Heartbeat>(new string[] { });
 
-            var request = new RestRequest(GetCommand(Command.HeartBeat));
-
-            var response = client.Execute<HeartbeatResponse>(request);
-
-            if (IsSuccessful(response))
-            {
-                var heartbeatResponse = response.Data;
-
-                return heartbeatResponse.ok;
-            }
-
-            else
-            {
-                return false;
-            }
+            return heartbeatResponse != null ? heartbeatResponse.ok : false;
         }
 
         /// <summary>
@@ -62,23 +48,9 @@ namespace StockFighter
         /// <returns>Returns true if the venue is available; else, false.</returns>
         public static bool CheckVenue(string venue)
         {
-            var client = getClient();
+            var venueResponse = GetResponse<VenueHeartbeat>(new string[] { venue });
 
-            var request = new RestRequest(String.Format(GetCommand(Command.CheckVenue), venue));
-
-            var response = client.Execute<VenueHeartbeatResponse>(request);
-
-            if (IsSuccessful(response))
-            {
-                var venueResp = response.Data;
-
-                return venueResp.ok;
-            }
-
-            else
-            {
-                return false;
-            }
+            return venueResponse != null ? venueResponse.ok : false;
         }
 
         /// <summary>
@@ -88,22 +60,14 @@ namespace StockFighter
         /// <returns>Returns a VenueStocks response with an array of VenueStock.</returns>
         public static VenueStocks GetStocks(string venue)
         {
-            var client = getClient();
+            var getStocksResponse = GetResponse<VenueStocks>(new string[] { venue });
 
-            var commandString = String.Format(GetCommand(Command.GetStocks), venue);
-
-            var request = new RestRequest(commandString);
-
-            var response = client.Execute<VenueStocks>(request);
-
-            if (IsSuccessful(response))
+            if(getStocksResponse != null)
             {
-                var venues = response.Data;
-
-                return venues;
+                return getStocksResponse;
             }
 
-            else 
+            else
             {
                 throw new ArgumentException("Venue \"" + venue + "\" does not exist.");
             }
@@ -117,18 +81,10 @@ namespace StockFighter
         /// <returns>Returns an OrderBook reponse with an array of asks and bids.</returns>
         public static Orderbook GetOrderbook(string venue, string stock)
         {
-            var client = getClient();
+            var orderbook = GetResponse<Orderbook>(new string[] { venue, stock });
 
-            var commandString = String.Format(GetCommand(Command.GetOrderbook), venue, stock);
-
-            var request = new RestRequest(commandString);
-
-            var response = client.Execute<Orderbook>(request);
-
-            if (IsSuccessful(response))
-            {
-                var orderbook = response.Data;
-
+            if(orderbook != null)
+            { 
                 orderbook.asks = orderbook.asks ?? new List<Order>();
 
                 orderbook.bids = orderbook.bids ?? new List<Order>();
@@ -157,57 +113,55 @@ namespace StockFighter
             return client;
         }
 
-        private static IRestResponse<TClass> GetResponse<TClass>(
-            Command command, 
-            string[] args) where TClass new()
+        private static T GetResponse<T>(string[] args) where T : new()
         {
             var client = getClient();
 
-            var rawCommandString = GetCommand(command);
+            var rawCommandString = getCommand(typeof(T));
 
             var commandString = String.Format(rawCommandString, args);
 
             var request = new RestRequest(commandString);
 
-            IRestResponse<TClass> response = client.Execute<TClass>(request);
+            var response = client.Execute<T>(request);
 
-
+            return response.Data;
         }
 
         /// <summary>
-        /// Translation matrix for a command enum to the URL.
+        /// Translation matrix for a deserialized response to the URL.
         /// </summary>
         /// <remarks>
         /// Any REST parameters will appear in the returned string as format hooks.
         /// </remarks>
-        /// <param name="command">The command to retrieve the REST string for.</param>
+        /// <typeparam name="T">A deserialized <c ref="APIResponse"/> class.</typeparam>
         /// <returns>
         /// Returns a command string with the parameters 
         /// ready to be replaced by String.Format.
         /// </returns>
-        private static string GetCommand(Command command)
+        private static string getCommand(Type type)
         {
-            var cmdString = "";
-
-            switch (command)
+            var switchDict = new Dictionary<Type, string>
             {
-                case Command.HeartBeat:
-                    cmdString = "heartbeat";
-                    break;
-                case Command.CheckVenue:
-                    cmdString = "venues/{0}/heartbeat";
-                    break;
-                case Command.GetStocks:
-                    cmdString = "venues/{0}/stocks";
-                    break;
-                case Command.GetOrderbook:
-                    cmdString = "venues/{0}/stocks/{1}";
-                    break;
-                default:
-                    throw new NotImplementedException();
+                { typeof(Heartbeat), "heartbeat" },
+                { typeof(VenueHeartbeat), "venues/{0}/heartbeat" },
+                { typeof(VenueStocks), "venues/{0}/stocks" },
+                { typeof(Orderbook), "venues/{0}/stocks/{1}" }
+            };
+
+            var dict = new Dictionary<Type, string>();
+
+            if (switchDict.Keys.Contains(type))
+            {
+                return switchDict[type];
             }
 
-            return cmdString;
+            else
+            {
+                throw new NotImplementedException(
+                    "Class \"" + type.ToString() + "\" has not been implemented.");
+            }
+
         }
 
         /// <summary>
@@ -227,18 +181,12 @@ namespace StockFighter
     /// <summary>
     /// Deserialized response from a Heartbeat command.
     /// </summary>
-    public class HeartbeatResponse : APIResponse
-    {
-        /// <summary>
-        /// Error text (if no error, then empty).
-        /// </summary>
-        public string error { get; set; }
-    }
+    public class Heartbeat : APIResponse { }
 
     /// <summary>
     /// Deserialized response from a CheckVenue command.
     /// </summary>
-    public class VenueHeartbeatResponse : APIResponse
+    public class VenueHeartbeat : APIResponse
     {
         /// <summary>
         /// Venue that heartbeat was queried for.
@@ -332,28 +280,4 @@ namespace StockFighter
         /// </summary>
         public string error { get; set; }
     }
-
-    /// <summary>
-    /// API Commands.
-    /// </summary>
-    public enum Command
-    {
-        /// <summary>
-        /// Checks if the server is up.
-        /// </summary>
-        HeartBeat,
-        /// <summary>
-        /// Checks if a venue is up.
-        /// </summary>
-        CheckVenue,
-        /// <summary>
-        /// Gets a list of stocks on a particular venue.
-        /// </summary>
-        GetStocks,
-        /// <summary>
-        /// Gets a list of bids and asks on a particular stock.
-        /// </summary>
-        GetOrderbook
-    }
-
 }
