@@ -85,11 +85,27 @@ namespace StockFighter
 
             if(orderbook != null)
             { 
-                orderbook.asks = orderbook.asks ?? new List<Order>();
+                orderbook.asks = orderbook.asks ?? new List<Orderbook.Request>();
 
-                orderbook.bids = orderbook.bids ?? new List<Order>();
+                orderbook.bids = orderbook.bids ?? new List<Orderbook.Request>();
 
                 return orderbook;
+            }
+
+            else
+            {
+                throw new ArgumentException("Stock \"" + stock + "\" in venue \""
+                    + venue + "\" does not exist.");
+            }
+        }
+
+        public static Quote GetQuote(string venue, string stock)
+        {
+            var quote = GetResponse<Quote>(new string[] { venue, stock });
+
+            if (quote != null)
+            {
+                return quote;
             }
 
             else
@@ -146,7 +162,8 @@ namespace StockFighter
                 { typeof(Heartbeat), "heartbeat" },
                 { typeof(VenueHeartbeat), "venues/{0}/heartbeat" },
                 { typeof(VenueStocks), "venues/{0}/stocks" },
-                { typeof(Orderbook), "venues/{0}/stocks/{1}" }
+                { typeof(Orderbook), "venues/{0}/stocks/{1}" },
+                { typeof(Quote), "venues/{0}/stocks/{1}/quote" }
             };
 
             var dict = new Dictionary<Type, string>();
@@ -236,34 +253,89 @@ namespace StockFighter
         /// <summary>
         /// The list of bids (buys) for the stock.
         /// </summary>
-        public List<Order> bids { get; set; }
+        public List<Orderbook.Request> bids { get; set; }
         /// <summary>
         /// The list of asks (sells) for the stock.
         /// </summary>
-        public List<Order> asks { get; set; }
+        public List<Orderbook.Request> asks { get; set; }
         /// <summary>
         /// The timestamp the orderbook was retrieved.
         /// </summary>
         public DateTime ts { get; set; }
+
+        /// <summary>
+        /// Deserialized representation of an orderbook request (bid or ask).
+        /// </summary>
+        public class Request
+        {
+            /// <summary>
+            /// The price of the request.
+            /// </summary>
+            public decimal price { get; set; }
+            /// <summary>
+            /// The quantity of the request.
+            /// </summary>
+            public int qty { get; set; }
+            /// <summary>
+            /// Is this a request to buy (bid) or sell (ask)?
+            /// </summary>
+            public bool isBuy { get; set; }
+        }
     }
 
     /// <summary>
-    /// Deserialized representation of an order (bid or ask).
+    /// Deserialized representation of a quote request.
     /// </summary>
-    public class Order
+    public class Quote : APIResponse
     {
         /// <summary>
-        /// The price of the order.
+        /// The stocks's symbol.
         /// </summary>
-        public decimal price { get; set; }
+        public string symbol { get; set; }
         /// <summary>
-        /// The quantity of the order.
+        /// The venue of the stock.
         /// </summary>
-        public int qty { get; set; }
+        public string venue { get; set; }
         /// <summary>
-        /// Is this order a buy (bid) or a sell (ask)?
+        /// The best price currently bid for the stock.
         /// </summary>
-        public bool isBuy { get; set; }
+        public int bid { get; set; }
+        /// <summary>
+        /// The best price currently offered for the stock.
+        /// </summary>
+        public int ask { get; set; }
+        /// <summary>
+        /// The aggregate size of all orders at the best bid.
+        /// </summary>
+        public int bidSize { get; set; }
+        /// <summary>
+        /// The aggregate size of all orders at the best ask.
+        /// </summary>
+        public int askSize { get; set; }
+        /// <summary>
+        /// The aggregate size of all bids.
+        /// </summary>
+        public int bidDepth { get; set; }
+        /// <summary>
+        /// The aggregate size of all asks.
+        /// </summary>
+        public int askDepth { get; set; }
+        /// <summary>
+        /// The price of the last trade.
+        /// </summary>
+        public int last { get; set; }
+        /// <summary>
+        /// The quantity of the last trade.
+        /// </summary>
+        public int lastSize { get; set; }
+        /// <summary>
+        /// The timestamp of the last trade.
+        /// </summary>
+        public DateTime lastTrade { get; set; }
+        /// <summary>
+        /// The timestamp the quote was last updated server-side.
+        /// </summary>
+        public DateTime quoteTime { get; set; }
     }
 
     /// <summary>
