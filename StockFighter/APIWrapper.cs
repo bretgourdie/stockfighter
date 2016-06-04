@@ -338,10 +338,11 @@ namespace StockFighter
         public DateTime quoteTime { get; set; }
     }
 
+
     /// <summary>
     /// Deserialized representation of an Order post.
     /// </summary>
-    public class Order : APIPost
+    private class _orderRequest : APIPost
     {
         /// <summary>
         /// The trading account you are trading for.
@@ -373,42 +374,6 @@ namespace StockFighter
         /// <summary>
         /// The order type.
         /// </summary>
-        /// <remarks>
-        /// <list type="table">
-        ///     <listheader>
-        ///         <term>
-        ///         Limit Order
-        ///         </term>
-        ///         <description>
-        ///         
-        ///         </description>
-        ///     </listheader>
-        ///     <item>
-        ///         <term>
-        ///         </term>
-        ///         <description>
-        ///         </description>
-        ///     </item>
-        ///     <item>
-        ///         <term>
-        ///         </term>
-        ///         <description>
-        ///         </description>
-        ///     </item>
-        ///     <item>
-        ///         <term>
-        ///         </term>
-        ///         <description>
-        ///         </description>
-        ///     </item>
-        ///     <item>
-        ///         <term>
-        ///         </term>
-        ///         <description>
-        ///         </description>
-        ///     </item>
-        /// </list>
-        /// </remarks>
         public string orderType { get; set; }
     }
 
