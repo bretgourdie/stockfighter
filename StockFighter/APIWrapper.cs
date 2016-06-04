@@ -192,6 +192,7 @@ namespace StockFighter
         }
 
 
+
         #endregion
     }
 
@@ -342,7 +343,193 @@ namespace StockFighter
     /// <summary>
     /// Deserialized representation of an Order post.
     /// </summary>
-    private class _orderRequest : APIPost
+    internal class _orderRequest : AbstractOrderRequest 
+    {
+        /// <summary>
+        /// Whether you want to buy or sell.
+        /// </summary>
+        /// <remarks>
+        /// To bid, use "buy". To ask, use "sell".
+        /// </remarks>
+        public string direction { get; set; }
+        /// <summary>
+        /// The order type.
+        /// </summary>
+        public string orderType { get; set; }
+
+        /// <summary>
+        /// Translates a client's OrderRequest to an API-ready _orderRequest.
+        /// </summary>
+        /// <param name="orderRequest">The client's order request.</param>
+        public _orderRequest(OrderRequest orderRequest)
+        {
+            this.account = orderRequest.account;
+            this.venue = orderRequest.venue;
+            this.stock = orderRequest.stock;
+            this.price = orderRequest.price;
+            this.qty = orderRequest.qty;
+            this.orderType = getOrderType(orderRequest.ordertype);
+            this.direction = getDirection(orderRequest.direction);
+        }
+
+        /// <summary>
+        /// Returns stringified version of the supplied OrderDirection.
+        /// </summary>
+        /// <param name="direction">The direction of the order.</param>
+        /// <returns>
+        /// Returns a stringified OrderDirection for the API.
+        /// </returns>
+        private string getDirection(OrderDirection direction)
+        {
+            string sDirection = "";
+            switch (direction)
+            {
+                case OrderDirection.Buy:
+                    sDirection = "buy";
+                    break;
+                case OrderDirection.Sell:
+                    sDirection = "sell";
+                    break;
+                default:
+                    throw new NotImplementedException("Direction \""
+                        + direction.ToString() + "\" not implemented.");
+            }
+
+            return sDirection;
+        }
+
+        /// <summary>
+        /// Returns stringified version of the supplied OrderType.
+        /// </summary>
+        /// <param name="type">The type of the order.</param>
+        /// <returns>A stringified OrderType for the API.</returns>
+        private string getOrderType(OrderType type)
+        {
+            string sType = "";
+            switch (type)
+            {
+                case OrderType.Limit:
+                    sType = "limit";
+                    break;
+                case OrderType.Market:
+                    sType = "market";
+                    break;
+                case OrderType.FillOrKill:
+                    sType = "fill-or-kill";
+                    break;
+                case OrderType.ImmediateOrCancel:
+                    sType = "immediate-or-cancel";
+                    break;
+                default:
+                    throw new NotImplementedException("Type \""
+                        + type.ToString() + "\" not implemented.");
+            }
+
+            return sType;
+        }
+    }
+
+    /// <summary>
+    /// User-facing representation of an Order post.
+    /// </summary>
+    public class OrderRequest : AbstractOrderRequest
+    {
+        /// <summary>
+        /// The type of the order request.
+        /// </summary>
+        public OrderType ordertype { get; set; }
+        /// <summary>
+        /// The direction of the order request.
+        /// </summary>
+        public OrderDirection direction { get; set; }
+
+        /// <summary>
+        /// Creates an OrderRequest.
+        /// Use the APIWrapper to post it.
+        /// </summary>
+        /// <param name="account">
+        /// The account to purchase the order with.
+        /// </param>
+        /// <param name="venue">The venue of the stock.</param>
+        /// <param name="stock">The stock's symbol.</param>
+        /// <param name="price">The price to buy/sell at.</param>
+        /// <param name="qty">The amount of stock to buy/sell.</param>
+        /// <param name="direction">
+        /// The decision to buy or sell the stock.
+        /// </param>
+        /// <param name="ordertype">
+        /// The type of order to put.
+        /// </param>
+        public OrderRequest(
+            string account,
+            string venue,
+            string stock,
+            int price,
+            int qty,
+            OrderDirection direction,
+            OrderType ordertype)
+        {
+            this.account = account;
+            this.venue = venue;
+            this.stock = stock;
+            this.price = price;
+            this.qty = qty;
+            this.direction = direction;
+            this.ordertype = ordertype;
+        }
+    }
+
+    /// <summary>
+    /// Direction of order.
+    /// </summary>
+    public enum OrderDirection
+    {
+        /// <summary>
+        /// Desire to bid.
+        /// </summary>
+        Buy,
+        /// <summary>
+        /// Desire to ask.
+        /// </summary>
+        Sell
+    }
+
+    /// <summary>
+    /// Type of order.
+    /// </summary>
+    public enum OrderType 
+    {
+        /// <summary>
+        /// <para>
+        /// The most common order.
+        /// </para>
+        /// <para>
+        /// Immediately matches any orders offering prices "as good or better
+        /// as the ones listed in the order."
+        /// Has any unmatched portion of the order rests on the orderbook.
+        /// </para>
+        /// <para>
+        /// Good until cancelled.
+        /// </para>
+        /// </summary>
+        Limit,
+        /// <summary>
+        /// Executes immediately regardless of price.
+        /// </summary>
+        Market,
+        /// <summary>
+        /// Limit order for immediate execution on an all-or-nothing basis.
+        /// The order may be accepted ("ok":true) but not receive any fills
+        /// ("open":false).
+        /// </summary>
+        FillOrKill,
+        /// <summary>
+        /// A <c ref="OrderType.FillOrKill"/> that accepts partial execution.
+        /// </summary>
+        ImmediateOrCancel
+    }
+
+    public abstract class AbstractOrderRequest : APIPost
     {
         /// <summary>
         /// The trading account you are trading for.
@@ -364,17 +551,6 @@ namespace StockFighter
         /// The desired quantity.
         /// </summary>
         public int qty { get; set; }
-        /// <summary>
-        /// Whether you want to buy or sell.
-        /// </summary>
-        /// <remarks>
-        /// To bid, use "buy". To ask, use "sell".
-        /// </remarks>
-        public string direction { get; set; }
-        /// <summary>
-        /// The order type.
-        /// </summary>
-        public string orderType { get; set; }
     }
 
     /// <summary>
