@@ -115,6 +115,25 @@ namespace StockFighter
             }
         }
 
+        public static OrderResponse PostOrder(OrderRequest order)
+        {
+            var orderRequest = new _orderRequest(order);
+
+            var orderResponse = GetResponse<_orderResponse>(orderRequest);
+
+            if(orderResponse != null)
+            {
+                var clientOrderResponse = new OrderResponse(orderResponse);
+
+                return clientOrderResponse;
+            }
+
+            else
+            {
+                throw new ArgumentException("Invalid OrderRequest.");
+            }
+        }
+
         #endregion
         #region Privates
 
