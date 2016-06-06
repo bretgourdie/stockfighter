@@ -124,7 +124,8 @@ namespace StockFighter
         {
             var orderRequest = new _orderRequest(order);
 
-            var orderResponse = GetResponse<_orderResponse>(
+            var orderResponse = postResponse<_orderResponse>(
+                orderRequest,
                 new string[] { orderRequest.venue, orderRequest.stock });
 
             if(orderResponse != null)
@@ -150,8 +151,33 @@ namespace StockFighter
         private static RestClient getClient()
         {
             var client = new RestClient(URL);
-            client.Authenticator = new JwtAuthenticator(apiKey);
             return client;
+        }
+
+        /// <summary>
+        /// Posts the APIPost object and returns the response.
+        /// </summary>
+        /// <typeparam name="T">The type of repsonse to return.</typeparam>
+        /// <param name="post">The JSON object to post.</param>
+        /// <param name="args">The parameters for the REST command.</param>
+        /// <returns>Returns the response as T or null if invalid.</returns>
+        private static T postResponse<T>(APIPost post, string[] args) where T : new()
+        {
+            var client = getClient();
+
+            var rawCommandString = getCommand(typeof(T));
+
+            var commandString = String.Format(rawCommandString, args);
+
+            var request = new RestRequest(commandString, Method.POST);
+
+            request.RequestFormat = DataFormat.Json;
+            request.AddParameter("X-Starfighter-Authorization", apiKey, ParameterType.HttpHeader);
+            request.AddBody(post);
+
+            var response = client.Execute<T>(request);
+
+            return response.Data;
         }
 
         private static T GetResponse<T>(string[] args) where T : new()
@@ -162,7 +188,7 @@ namespace StockFighter
 
             var commandString = String.Format(rawCommandString, args);
 
-            var request = new RestRequest(commandString);
+            var request = new RestRequest(commandString, Method.GET);
 
             var response = client.Execute<T>(request);
 
@@ -189,7 +215,7 @@ namespace StockFighter
                 { typeof(VenueStocks), "venues/{0}/stocks" },
                 { typeof(Orderbook), "venues/{0}/stocks/{1}" },
                 { typeof(Quote), "venues/{0}/stocks/{1}/quote" },
-                { typeof(_orderRequest), "venues/{0}/stocks/{1}/orders" }
+                { typeof(_orderResponse), "venues/{0}/stocks/{1}/orders" }
             };
 
             var dict = new Dictionary<Type, string>();
