@@ -10,7 +10,8 @@ namespace StockFighter
     {
         static void Main(string[] args)
         {
-            var venue = "HAEPEX";
+            var venue = @"HAEPEX";
+            var account = @"KB58149702";
 
             try
             {
@@ -47,7 +48,7 @@ namespace StockFighter
 
                     // Attempt to buy 100 shares
                     var orderRequest = new OrderRequest(
-                        "BA88284100",
+                        account,
                         venue,
                         stock.symbol,
                         0,
