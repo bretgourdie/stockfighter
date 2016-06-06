@@ -10,7 +10,8 @@ namespace StockFighter
     {
         static void Main(string[] args)
         {
-            var venue = "LBEX";
+            var venue = @"HAEPEX";
+            var account = @"KB58149702";
 
             try
             {
@@ -44,6 +45,18 @@ namespace StockFighter
                     {
                         Console.WriteLine("\t\t" + ask.qty + " @ $" + ask.price);
                     }
+
+                    // Attempt to buy 100 shares
+                    var orderRequest = new OrderRequest(
+                        account,
+                        venue,
+                        stock.symbol,
+                        0,
+                        100,
+                        OrderDirection.Buy,
+                        OrderType.Market);
+
+                    var orderResponse = APIWrapper.PostOrder(orderRequest);
                 }
             }
 
