@@ -115,11 +115,17 @@ namespace StockFighter
             }
         }
 
+        /// <summary>
+        /// Posts an Order to the stock exchange.
+        /// </summary>
+        /// <param name="order">The order to post.</param>
+        /// <returns>The <c ref="OrderResponse"/> for the request.</returns>
         public static OrderResponse PostOrder(OrderRequest order)
         {
             var orderRequest = new _orderRequest(order);
 
-            var orderResponse = GetResponse<_orderResponse>(orderRequest);
+            var orderResponse = GetResponse<_orderResponse>(
+                new string[] { orderRequest.venue, orderRequest.stock });
 
             if(orderResponse != null)
             {
@@ -182,7 +188,8 @@ namespace StockFighter
                 { typeof(VenueHeartbeat), "venues/{0}/heartbeat" },
                 { typeof(VenueStocks), "venues/{0}/stocks" },
                 { typeof(Orderbook), "venues/{0}/stocks/{1}" },
-                { typeof(Quote), "venues/{0}/stocks/{1}/quote" }
+                { typeof(Quote), "venues/{0}/stocks/{1}/quote" },
+                { typeof(_orderRequest), "venues/{0}/stocks/{1}/orders" }
             };
 
             var dict = new Dictionary<Type, string>();
