@@ -177,7 +177,7 @@ namespace StockFighter
         /// </summary>
         /// <typeparam name="T">The response to return.</typeparam>
         /// <param name="args">REST parameters, if needed.</param>
-        /// <returns>Returns a response in the form of T.</returns>
+        /// <returns>Returns a response in the form of T or null if invalid.</returns>
         private static T getResponse<T>(params string[] args) where T : new()
         {
             return performCommand<T>(null, Method.GET, apiKey, args);
@@ -191,7 +191,7 @@ namespace StockFighter
         /// <param name="method">The method to utilize the REST service with.</param>
         /// <param name="apiKey">The authorizing API key.</param>
         /// <param name="args">REST parameters, if needed.</param>
-        /// <returns>Returns a response in the form of T or null if an error occurs.</returns>
+        /// <returns>Returns a response in the form of T or null if invalid.</returns>
         private static T performCommand<T>(APIPost post, Method method, string apiKey, string[] args) where T : new()
         {
             var authorizationParameter = @"X-Starfighter-Authorization";
