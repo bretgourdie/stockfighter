@@ -99,6 +99,12 @@ namespace StockFighter
             }
         }
 
+        /// <summary>
+        /// Gets a Quote for a specific stock in a venue.
+        /// </summary>
+        /// <param name="venue">The venue for a particular stock.</param>
+        /// <param name="stock">The stock to obtain a quote for.</param>
+        /// <returns>Returns a Quote response.</returns>
         public static Quote GetQuote(string venue, string stock)
         {
             var quote = GetResponse<Quote>(new string[] { venue, stock });
