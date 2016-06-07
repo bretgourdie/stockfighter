@@ -78,7 +78,7 @@ namespace StockFighter
         /// </summary>
         /// <param name="venue">The venue for a particular stock.</param>
         /// <param name="stock">The stock to obtain an orderbook for.</param>
-        /// <returns>Returns an OrderBook reponse with an array of asks and bids.</returns>
+        /// <returns>Returns an OrderBook response with an array of asks and bids.</returns>
         public static Orderbook GetOrderbook(string venue, string stock)
         {
             var orderbook = GetResponse<Orderbook>(new string[] { venue, stock });
@@ -99,6 +99,12 @@ namespace StockFighter
             }
         }
 
+        /// <summary>
+        /// Gets a Quote for a specific stock in a venue.
+        /// </summary>
+        /// <param name="venue">The venue for a particular stock.</param>
+        /// <param name="stock">The stock to obtain a quote for.</param>
+        /// <returns>Returns a Quote response.</returns>
         public static Quote GetQuote(string venue, string stock)
         {
             var quote = GetResponse<Quote>(new string[] { venue, stock });
@@ -157,7 +163,7 @@ namespace StockFighter
         /// <summary>
         /// Posts the APIPost object and returns the response.
         /// </summary>
-        /// <typeparam name="T">The type of repsonse to return.</typeparam>
+        /// <typeparam name="T">The type of response to return.</typeparam>
         /// <param name="post">The JSON object to post.</param>
         /// <param name="args">The parameters for the REST command.</param>
         /// <returns>Returns the response as T or null if invalid.</returns>
@@ -180,6 +186,12 @@ namespace StockFighter
             return response.Data;
         }
 
+        /// <summary>
+        /// Executes a command and returns an expected response.
+        /// </summary>
+        /// <typeparam name="T">The response to return.</typeparam>
+        /// <param name="args">REST parameters, if needed.</param>
+        /// <returns>Returns a response in the form of T.</returns>
         private static T GetResponse<T>(string[] args) where T : new()
         {
             var client = getClient();
