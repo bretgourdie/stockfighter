@@ -167,23 +167,9 @@ namespace StockFighter
         /// <param name="post">The JSON object to post.</param>
         /// <param name="args">The parameters for the REST command.</param>
         /// <returns>Returns the response as T or null if invalid.</returns>
-        private static T postResponse<T>(APIPost post, string[] args) where T : new()
+        private static T postResponse<T>(APIPost post, params string[] args) where T : new()
         {
-            var client = getClient();
-
-            var rawCommandString = getCommand(typeof(T));
-
-            var commandString = String.Format(rawCommandString, args);
-
-            var request = new RestRequest(commandString, Method.POST);
-
-            request.RequestFormat = DataFormat.Json;
-            request.AddParameter("X-Starfighter-Authorization", apiKey, ParameterType.HttpHeader);
-            request.AddBody(post);
-
-            var response = client.Execute<T>(request);
-
-            return response.Data;
+            return performCommand<T>(post, Method.POST, apiKey, args);
         }
 
         /// <summary>
@@ -192,15 +178,40 @@ namespace StockFighter
         /// <typeparam name="T">The response to return.</typeparam>
         /// <param name="args">REST parameters, if needed.</param>
         /// <returns>Returns a response in the form of T.</returns>
-        private static T GetResponse<T>(string[] args) where T : new()
+        private static T GetResponse<T>(params string[] args) where T : new()
         {
+            return performCommand<T>(null, Method.GET, apiKey, args);
+        }
+
+        /// <summary>
+        /// Performs the specified method using specified arguments and returns the specified response.
+        /// </summary>
+        /// <typeparam name="T">The type of response to return.</typeparam>
+        /// <param name="post">The POST object to serialize for the request, if needed.</param>
+        /// <param name="method">The method to utilize the REST service with.</param>
+        /// <param name="apiKey">The authorizing API key.</param>
+        /// <param name="args">REST parameters, if needed.</param>
+        /// <returns>Returns a response in the form of T or null if an error occurs.</returns>
+        private static T performCommand<T>(APIPost post, Method method, string apiKey, string[] args) where T : new()
+        {
+            var authorizationParameter = @"X-Starfighter-Authorization";
+
             var client = getClient();
 
             var rawCommandString = getCommand(typeof(T));
 
             var commandString = String.Format(rawCommandString, args);
 
-            var request = new RestRequest(commandString, Method.GET);
+            var request = new RestRequest(commandString, method);
+
+            if (post != null)
+            {
+                request.RequestFormat = DataFormat.Json;
+
+                request.AddParameter(authorizationParameter, apiKey);
+
+                request.AddBody(post);
+            }
 
             var response = client.Execute<T>(request);
 
