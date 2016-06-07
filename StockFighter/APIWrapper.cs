@@ -23,10 +23,6 @@ namespace StockFighter
         /// Default API Key for authorization.
         /// </summary>
         private const string apiKey = @"b5b8b7f29d5aa969da22279262c1e68ff82515c4";
-        /// <summary>
-        /// Specification of JSON media type.
-        /// </summary>
-        private const string jsonMedia = @"application/json";
 
         #region API Calls
 

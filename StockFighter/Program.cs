@@ -10,8 +10,8 @@ namespace StockFighter
     {
         static void Main(string[] args)
         {
-            var venue = @"HAEPEX";
-            var account = @"KB58149702";
+            var venue = @"FCMEX";
+            var account = @"LPK74064170";
 
             try
             {
