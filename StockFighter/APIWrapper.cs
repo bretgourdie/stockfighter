@@ -23,10 +23,6 @@ namespace StockFighter
         /// Default API Key for authorization.
         /// </summary>
         private const string apiKey = @"b5b8b7f29d5aa969da22279262c1e68ff82515c4";
-        /// <summary>
-        /// Specification of JSON media type.
-        /// </summary>
-        private const string jsonMedia = @"application/json";
 
         #region API Calls
 
@@ -36,7 +32,7 @@ namespace StockFighter
         /// <returns>Returns true if the server is up; else, false.</returns>
         public static bool Heartbeat()
         {
-            var heartbeatResponse = GetResponse<Heartbeat>(new string[] { });
+            var heartbeatResponse = getResponse<Heartbeat>(new string[] { });
 
             return heartbeatResponse != null ? heartbeatResponse.ok : false;
         }
@@ -48,7 +44,7 @@ namespace StockFighter
         /// <returns>Returns true if the venue is available; else, false.</returns>
         public static bool CheckVenue(string venue)
         {
-            var venueResponse = GetResponse<VenueHeartbeat>(new string[] { venue });
+            var venueResponse = getResponse<VenueHeartbeat>(new string[] { venue });
 
             return venueResponse != null ? venueResponse.ok : false;
         }
@@ -60,7 +56,7 @@ namespace StockFighter
         /// <returns>Returns a VenueStocks response with an array of VenueStock.</returns>
         public static VenueStocks GetStocks(string venue)
         {
-            var getStocksResponse = GetResponse<VenueStocks>(new string[] { venue });
+            var getStocksResponse = getResponse<VenueStocks>(new string[] { venue });
 
             if(getStocksResponse != null)
             {
@@ -81,7 +77,7 @@ namespace StockFighter
         /// <returns>Returns an OrderBook response with an array of asks and bids.</returns>
         public static Orderbook GetOrderbook(string venue, string stock)
         {
-            var orderbook = GetResponse<Orderbook>(new string[] { venue, stock });
+            var orderbook = getResponse<Orderbook>(new string[] { venue, stock });
 
             if(orderbook != null)
             { 
@@ -107,7 +103,7 @@ namespace StockFighter
         /// <returns>Returns a Quote response.</returns>
         public static Quote GetQuote(string venue, string stock)
         {
-            var quote = GetResponse<Quote>(new string[] { venue, stock });
+            var quote = getResponse<Quote>(new string[] { venue, stock });
 
             if (quote != null)
             {
@@ -167,23 +163,9 @@ namespace StockFighter
         /// <param name="post">The JSON object to post.</param>
         /// <param name="args">The parameters for the REST command.</param>
         /// <returns>Returns the response as T or null if invalid.</returns>
-        private static T postResponse<T>(APIPost post, string[] args) where T : new()
+        private static T postResponse<T>(APIPost post, params string[] args) where T : new()
         {
-            var client = getClient();
-
-            var rawCommandString = getCommand(typeof(T));
-
-            var commandString = String.Format(rawCommandString, args);
-
-            var request = new RestRequest(commandString, Method.POST);
-
-            request.RequestFormat = DataFormat.Json;
-            request.AddParameter("X-Starfighter-Authorization", apiKey, ParameterType.HttpHeader);
-            request.AddBody(post);
-
-            var response = client.Execute<T>(request);
-
-            return response.Data;
+            return performCommand<T>(post, Method.POST, apiKey, args);
         }
 
         /// <summary>
@@ -191,16 +173,41 @@ namespace StockFighter
         /// </summary>
         /// <typeparam name="T">The response to return.</typeparam>
         /// <param name="args">REST parameters, if needed.</param>
-        /// <returns>Returns a response in the form of T.</returns>
-        private static T GetResponse<T>(string[] args) where T : new()
+        /// <returns>Returns a response in the form of T or null if invalid.</returns>
+        private static T getResponse<T>(params string[] args) where T : new()
         {
+            return performCommand<T>(null, Method.GET, apiKey, args);
+        }
+
+        /// <summary>
+        /// Performs the specified method using specified arguments and returns the specified response.
+        /// </summary>
+        /// <typeparam name="T">The type of response to return.</typeparam>
+        /// <param name="post">The POST object to serialize for the request, if needed.</param>
+        /// <param name="method">The method to utilize the REST service with.</param>
+        /// <param name="apiKey">The authorizing API key.</param>
+        /// <param name="args">REST parameters, if needed.</param>
+        /// <returns>Returns a response in the form of T or null if invalid.</returns>
+        private static T performCommand<T>(APIPost post, Method method, string apiKey, string[] args) where T : new()
+        {
+            var authorizationParameter = @"X-Starfighter-Authorization";
+
             var client = getClient();
 
             var rawCommandString = getCommand(typeof(T));
 
             var commandString = String.Format(rawCommandString, args);
 
-            var request = new RestRequest(commandString, Method.GET);
+            var request = new RestRequest(commandString, method);
+
+            if (post != null)
+            {
+                request.RequestFormat = DataFormat.Json;
+
+                request.AddParameter(authorizationParameter, apiKey, ParameterType.HttpHeader);
+
+                request.AddBody(post);
+            }
 
             var response = client.Execute<T>(request);
 
