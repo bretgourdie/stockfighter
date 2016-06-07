@@ -10,12 +10,13 @@ namespace StockFighter
     {
         static void Main(string[] args)
         {
-            var venue = @"FCMEX";
-            var account = @"LPK74064170";
+            var venue = @"BHKEX";
+            var account = @"WBS48015763";
+            var wrapper = new APIWrapper();
 
             try
             {
-                var stocks = APIWrapper.GetStocks(venue);
+                var stocks = wrapper.GetStocks(venue);
 
                 Console.WriteLine("Stocks for venue \"" + venue + "\":");
 
@@ -23,7 +24,7 @@ namespace StockFighter
                 {
                     Console.WriteLine("\t" + stock.symbol + " (" + stock.name + ")");
 
-                    var quote = APIWrapper.GetQuote(venue, stock.symbol);
+                    var quote = wrapper.GetQuote(venue, stock.symbol);
 
                     Console.WriteLine("\tQuote:");
                     Console.WriteLine("\t\tAsk: " + quote.ask);
@@ -32,7 +33,7 @@ namespace StockFighter
                     Console.WriteLine("\t\tLast trade at: " + quote.lastTrade);
                     Console.WriteLine("\n");
 
-                    var orderbook = APIWrapper.GetOrderbook(venue, stock.symbol);
+                    var orderbook = wrapper.GetOrderbook(venue, stock.symbol);
 
                     Console.WriteLine("\tBids: ");
                     foreach (var bid in orderbook.bids)
@@ -56,7 +57,16 @@ namespace StockFighter
                         OrderDirection.Buy,
                         OrderType.Market);
 
-                    var orderResponse = APIWrapper.PostOrder(orderRequest);
+                    var orderResponse = wrapper.PostOrder(orderRequest);
+                    if (orderResponse != null)
+                    {
+                        Console.WriteLine("\tFills:");
+
+                        foreach (var fill in orderResponse.fills)
+                        {
+                            Console.WriteLine("\t\t" + fill.qty + " @ $" + fill.price);
+                        }
+                    }
                 }
             }
 
