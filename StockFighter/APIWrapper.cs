@@ -78,7 +78,7 @@ namespace StockFighter
         /// </summary>
         /// <param name="venue">The venue for a particular stock.</param>
         /// <param name="stock">The stock to obtain an orderbook for.</param>
-        /// <returns>Returns an OrderBook reponse with an array of asks and bids.</returns>
+        /// <returns>Returns an OrderBook response with an array of asks and bids.</returns>
         public static Orderbook GetOrderbook(string venue, string stock)
         {
             var orderbook = GetResponse<Orderbook>(new string[] { venue, stock });
