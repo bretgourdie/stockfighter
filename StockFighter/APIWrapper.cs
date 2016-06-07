@@ -186,6 +186,12 @@ namespace StockFighter
             return response.Data;
         }
 
+        /// <summary>
+        /// Executes a command and returns an expected response.
+        /// </summary>
+        /// <typeparam name="T">The response to return.</typeparam>
+        /// <param name="args">REST parameters, if needed.</param>
+        /// <returns>Returns a response in the form of T.</returns>
         private static T GetResponse<T>(string[] args) where T : new()
         {
             var client = getClient();
