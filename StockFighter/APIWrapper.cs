@@ -36,7 +36,7 @@ namespace StockFighter
         /// <returns>Returns true if the server is up; else, false.</returns>
         public static bool Heartbeat()
         {
-            var heartbeatResponse = GetResponse<Heartbeat>(new string[] { });
+            var heartbeatResponse = getResponse<Heartbeat>(new string[] { });
 
             return heartbeatResponse != null ? heartbeatResponse.ok : false;
         }
@@ -48,7 +48,7 @@ namespace StockFighter
         /// <returns>Returns true if the venue is available; else, false.</returns>
         public static bool CheckVenue(string venue)
         {
-            var venueResponse = GetResponse<VenueHeartbeat>(new string[] { venue });
+            var venueResponse = getResponse<VenueHeartbeat>(new string[] { venue });
 
             return venueResponse != null ? venueResponse.ok : false;
         }
@@ -60,7 +60,7 @@ namespace StockFighter
         /// <returns>Returns a VenueStocks response with an array of VenueStock.</returns>
         public static VenueStocks GetStocks(string venue)
         {
-            var getStocksResponse = GetResponse<VenueStocks>(new string[] { venue });
+            var getStocksResponse = getResponse<VenueStocks>(new string[] { venue });
 
             if(getStocksResponse != null)
             {
@@ -81,7 +81,7 @@ namespace StockFighter
         /// <returns>Returns an OrderBook response with an array of asks and bids.</returns>
         public static Orderbook GetOrderbook(string venue, string stock)
         {
-            var orderbook = GetResponse<Orderbook>(new string[] { venue, stock });
+            var orderbook = getResponse<Orderbook>(new string[] { venue, stock });
 
             if(orderbook != null)
             { 
@@ -107,7 +107,7 @@ namespace StockFighter
         /// <returns>Returns a Quote response.</returns>
         public static Quote GetQuote(string venue, string stock)
         {
-            var quote = GetResponse<Quote>(new string[] { venue, stock });
+            var quote = getResponse<Quote>(new string[] { venue, stock });
 
             if (quote != null)
             {
@@ -178,7 +178,7 @@ namespace StockFighter
         /// <typeparam name="T">The response to return.</typeparam>
         /// <param name="args">REST parameters, if needed.</param>
         /// <returns>Returns a response in the form of T.</returns>
-        private static T GetResponse<T>(params string[] args) where T : new()
+        private static T getResponse<T>(params string[] args) where T : new()
         {
             return performCommand<T>(null, Method.GET, apiKey, args);
         }
