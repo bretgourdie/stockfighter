@@ -157,7 +157,7 @@ namespace StockFighter
         /// <summary>
         /// Posts the APIPost object and returns the response.
         /// </summary>
-        /// <typeparam name="T">The type of repsonse to return.</typeparam>
+        /// <typeparam name="T">The type of response to return.</typeparam>
         /// <param name="post">The JSON object to post.</param>
         /// <param name="args">The parameters for the REST command.</param>
         /// <returns>Returns the response as T or null if invalid.</returns>
