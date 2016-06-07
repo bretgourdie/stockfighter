@@ -204,7 +204,7 @@ namespace StockFighter
             {
                 request.RequestFormat = DataFormat.Json;
 
-                request.AddParameter(authorizationParameter, apiKey);
+                request.AddParameter(authorizationParameter, apiKey, ParameterType.HttpHeader);
 
                 request.AddBody(post);
             }
