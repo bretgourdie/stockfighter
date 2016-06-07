@@ -30,7 +30,7 @@ namespace StockFighter
         /// Checks if the server is online.
         /// </summary>
         /// <returns>Returns true if the server is up; else, false.</returns>
-        public static bool Heartbeat()
+        public bool Heartbeat()
         {
             var heartbeatResponse = getResponse<Heartbeat>(new string[] { });
 
@@ -42,7 +42,7 @@ namespace StockFighter
         /// </summary>
         /// <param name="venue">The venue to check if available.</param>
         /// <returns>Returns true if the venue is available; else, false.</returns>
-        public static bool CheckVenue(string venue)
+        public bool CheckVenue(string venue)
         {
             var venueResponse = getResponse<VenueHeartbeat>(new string[] { venue });
 
@@ -54,7 +54,7 @@ namespace StockFighter
         /// </summary>
         /// <param name="venue">The venue to find stocks for.</param>
         /// <returns>Returns a VenueStocks response with an array of VenueStock.</returns>
-        public static VenueStocks GetStocks(string venue)
+        public VenueStocks GetStocks(string venue)
         {
             var getStocksResponse = getResponse<VenueStocks>(new string[] { venue });
 
@@ -75,7 +75,7 @@ namespace StockFighter
         /// <param name="venue">The venue for a particular stock.</param>
         /// <param name="stock">The stock to obtain an orderbook for.</param>
         /// <returns>Returns an OrderBook response with an array of asks and bids.</returns>
-        public static Orderbook GetOrderbook(string venue, string stock)
+        public Orderbook GetOrderbook(string venue, string stock)
         {
             var orderbook = getResponse<Orderbook>(new string[] { venue, stock });
 
@@ -101,7 +101,7 @@ namespace StockFighter
         /// <param name="venue">The venue for a particular stock.</param>
         /// <param name="stock">The stock to obtain a quote for.</param>
         /// <returns>Returns a Quote response.</returns>
-        public static Quote GetQuote(string venue, string stock)
+        public Quote GetQuote(string venue, string stock)
         {
             var quote = getResponse<Quote>(new string[] { venue, stock });
 
@@ -122,7 +122,7 @@ namespace StockFighter
         /// </summary>
         /// <param name="order">The order to post.</param>
         /// <returns>The <c ref="OrderResponse"/> for the request.</returns>
-        public static OrderResponse PostOrder(OrderRequest order)
+        public OrderResponse PostOrder(OrderRequest order)
         {
             var orderRequest = new _orderRequest(order);
 
@@ -150,7 +150,7 @@ namespace StockFighter
         /// Assembles a client with the default API key.
         /// </summary>
         /// <returns>Returns an instantiated, authorized RestClient.</returns>
-        private static RestClient getClient()
+        private RestClient getClient()
         {
             var client = new RestClient(URL);
             return client;
@@ -163,7 +163,7 @@ namespace StockFighter
         /// <param name="post">The JSON object to post.</param>
         /// <param name="args">The parameters for the REST command.</param>
         /// <returns>Returns the response as T or null if invalid.</returns>
-        private static T postResponse<T>(APIPost post, params string[] args) where T : new()
+        private T postResponse<T>(APIPost post, params string[] args) where T : new()
         {
             return performCommand<T>(post, Method.POST, apiKey, args);
         }
@@ -174,7 +174,7 @@ namespace StockFighter
         /// <typeparam name="T">The response to return.</typeparam>
         /// <param name="args">REST parameters, if needed.</param>
         /// <returns>Returns a response in the form of T or null if invalid.</returns>
-        private static T getResponse<T>(params string[] args) where T : new()
+        private T getResponse<T>(params string[] args) where T : new()
         {
             return performCommand<T>(null, Method.GET, apiKey, args);
         }
@@ -188,7 +188,7 @@ namespace StockFighter
         /// <param name="apiKey">The authorizing API key.</param>
         /// <param name="args">REST parameters, if needed.</param>
         /// <returns>Returns a response in the form of T or null if invalid.</returns>
-        private static T performCommand<T>(APIPost post, Method method, string apiKey, string[] args) where T : new()
+        private T performCommand<T>(APIPost post, Method method, string apiKey, string[] args) where T : new()
         {
             var authorizationParameter = @"X-Starfighter-Authorization";
 
@@ -225,7 +225,7 @@ namespace StockFighter
         /// Returns a command string with the parameters 
         /// ready to be replaced by String.Format.
         /// </returns>
-        private static string getCommand(Type type)
+        private string getCommand(Type type)
         {
             var switchDict = new Dictionary<Type, string>
             {
@@ -257,7 +257,7 @@ namespace StockFighter
         /// </summary>
         /// <param name="response">The response received from the request.</param>
         /// <returns>Returns true if the request was completed; else, false.</returns>
-        private static bool IsSuccessful(IRestResponse response)
+        private bool IsSuccessful(IRestResponse response)
         {
             return response.ResponseStatus == ResponseStatus.Completed;
         }
