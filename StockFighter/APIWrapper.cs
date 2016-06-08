@@ -216,6 +216,10 @@ namespace StockFighter
             return performCommand<T>(null, Method.GET, apiKey, args);
         }
 
+        /// <summary>
+        /// Retrieves the standard API Key.
+        /// </summary>
+        /// <returns>Returns the standard API Key.</returns>
         private string getApiKey()
         {
             return ConfigurationManager.AppSettings["apiKey"];
