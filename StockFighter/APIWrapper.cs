@@ -788,6 +788,10 @@ namespace StockFighter
         ImmediateOrCancel
     }
 
+    /// <summary>
+    /// Represents the base of an OrderRequest.
+    /// Use to generate a concrete OrderRequest.
+    /// </summary>
     public abstract class AbstractOrderRequest : APIPost
     {
         /// <summary>
