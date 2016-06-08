@@ -601,7 +601,7 @@ namespace StockFighter
     /// <summary>
     /// Deserialized representation of an Order post.
     /// </summary>
-    internal class _orderRequest : AbstractOrderRequest 
+    internal class _orderRequest : AbstractOrderRequest<string, string>
     {
         /// <summary>
         /// Whether you want to buy or sell.
@@ -609,11 +609,11 @@ namespace StockFighter
         /// <remarks>
         /// To bid, use "buy". To ask, use "sell".
         /// </remarks>
-        public string direction { get; set; }
+        public override string direction { get; set; }
         /// <summary>
         /// The order type.
         /// </summary>
-        public string orderType { get; set; }
+        public override string orderType { get; set; }
 
         /// <summary>
         /// Translates a client's OrderRequest to an API-ready _orderRequest.
@@ -626,7 +626,7 @@ namespace StockFighter
             this.stock = orderRequest.stock;
             this.price = orderRequest.price;
             this.qty = orderRequest.qty;
-            this.orderType = getOrderType(orderRequest.ordertype);
+            this.orderType = getOrderType(orderRequest.orderType);
             this.direction = getDirection(orderRequest.direction);
         }
 
@@ -690,16 +690,16 @@ namespace StockFighter
     /// <summary>
     /// User-facing representation of an Order post.
     /// </summary>
-    public class OrderRequest : AbstractOrderRequest
+    public class OrderRequest : AbstractOrderRequest<OrderType, OrderDirection>
     {
         /// <summary>
         /// The type of the order request.
         /// </summary>
-        public OrderType ordertype { get; set; }
+        public override OrderType orderType { get; set; }
         /// <summary>
         /// The direction of the order request.
         /// </summary>
-        public OrderDirection direction { get; set; }
+        public override OrderDirection direction { get; set; }
 
         /// <summary>
         /// Creates an OrderRequest.
@@ -733,7 +733,7 @@ namespace StockFighter
             this.price = price;
             this.qty = qty;
             this.direction = direction;
-            this.ordertype = ordertype;
+            this.orderType = ordertype;
         }
     }
 
@@ -791,7 +791,7 @@ namespace StockFighter
     /// Represents the base of an OrderRequest.
     /// Use to generate a concrete OrderRequest.
     /// </summary>
-    public abstract class AbstractOrderRequest : APIPost
+    public abstract class AbstractOrderRequest<OrderRequestType, OrderDirectionType> : APIPost
     {
         /// <summary>
         /// The trading account you are trading for.
@@ -813,6 +813,14 @@ namespace StockFighter
         /// The desired quantity.
         /// </summary>
         public virtual int qty { get; set; }
+        /// <summary>
+        /// The order type. Use a concrete type when inheriting.
+        /// </summary>
+        public abstract OrderRequestType orderType { get; set; }
+        /// <summary>
+        /// The order direction. Use a concrete type when inheriting.
+        /// </summary>
+        public abstract OrderDirectionType direction { get; set; }
     }
 
     /// <summary>
