@@ -10,8 +10,8 @@ namespace StockFighter
     {
         static void Main(string[] args)
         {
-            var venue = @"BHKEX";
-            var account = @"WBS48015763";
+            var venue = @"BDBAEX";
+            var account = @"HAB74751055";
             var wrapper = new APIWrapper();
 
             try
