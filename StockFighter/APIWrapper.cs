@@ -23,12 +23,15 @@ namespace StockFighter
         /// </summary>
         private const string URL = @"https://api.stockfighter.io/ob/api/";
 
+        private Dictionary<Type, string> commandDictionary;
+
 
         /// <summary>
         /// Initializes the APIWrapper.
         /// </summary>
         public APIWrapper()
         {
+            commandDictionary = getCommandDictionary();
         }
 
         #region API Calls
@@ -163,6 +166,21 @@ namespace StockFighter
             return client;
         }
 
+        private Dictionary<Type, string> getCommandDictionary()
+        {
+            var dict = new Dictionary<Type, string>
+            {
+                { typeof(Heartbeat), "heartbeat" },
+                { typeof(VenueHeartbeat), "venues/{0}/heartbeat" },
+                { typeof(VenueStocks), "venues/{0}/stocks" },
+                { typeof(Orderbook), "venues/{0}/stocks/{1}" },
+                { typeof(Quote), "venues/{0}/stocks/{1}/quote" },
+                { typeof(_orderResponse), "venues/{0}/stocks/{1}/orders" }
+            };
+
+            return dict;
+        }
+
         /// <summary>
         /// Posts the APIPost object and returns the response.
         /// </summary>
@@ -240,21 +258,11 @@ namespace StockFighter
         /// </returns>
         private string getCommand(Type type)
         {
-            var switchDict = new Dictionary<Type, string>
-            {
-                { typeof(Heartbeat), "heartbeat" },
-                { typeof(VenueHeartbeat), "venues/{0}/heartbeat" },
-                { typeof(VenueStocks), "venues/{0}/stocks" },
-                { typeof(Orderbook), "venues/{0}/stocks/{1}" },
-                { typeof(Quote), "venues/{0}/stocks/{1}/quote" },
-                { typeof(_orderResponse), "venues/{0}/stocks/{1}/orders" }
-            };
-
             var dict = new Dictionary<Type, string>();
 
-            if (switchDict.Keys.Contains(type))
+            if (commandDictionary.Keys.Contains(type))
             {
-                return switchDict[type];
+                return commandDictionary[type];
             }
 
             else
