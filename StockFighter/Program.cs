@@ -49,7 +49,7 @@ namespace StockFighter
                     }
 
                     // Attempt to buy 100 shares
-                    var orderRequest = new OrderRequest(
+                    var orderRequest = new Requests.OrderRequest(
                         account,
                         venue,
                         stock.symbol,
