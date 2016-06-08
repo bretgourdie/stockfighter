@@ -51,13 +51,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIWrapper.cs" />
+    <Compile Include="OrderDirection.cs" />
+    <Compile Include="OrderType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\AbstractOrderRequest.cs" />
+    <Compile Include="Requests\APIRequest.cs" />
+    <Compile Include="Requests\OrderRequest.cs" />
+    <Compile Include="Requests\_orderRequest.cs" />
+    <Compile Include="Responses\AbstractOrderResponse.cs" />
+    <Compile Include="Responses\APIResponse.cs" />
+    <Compile Include="Responses\Fill.cs" />
+    <Compile Include="Responses\Heartbeat.cs" />
+    <Compile Include="Responses\Orderbook.cs" />
+    <Compile Include="Responses\OrderResponse.cs" />
+    <Compile Include="Responses\Quote.cs" />
+    <Compile Include="Responses\VenueHeartbeat.cs" />
+    <Compile Include="Responses\VenueStocks.cs" />
+    <Compile Include="Responses\_orderResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
