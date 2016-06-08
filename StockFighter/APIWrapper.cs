@@ -258,8 +258,6 @@ namespace StockFighter
         /// </returns>
         private string getCommand(Type type)
         {
-            var dict = new Dictionary<Type, string>();
-
             if (commandDictionary.Keys.Contains(type))
             {
                 return commandDictionary[type];
@@ -270,7 +268,6 @@ namespace StockFighter
                 throw new NotImplementedException(
                     "Class \"" + type.ToString() + "\" has not been implemented.");
             }
-
         }
 
         /// <summary>
