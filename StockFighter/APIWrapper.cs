@@ -412,31 +412,31 @@ namespace StockFighter
     /// <summary>
     /// Internal representation of an OrderResponse.
     /// </summary>
-    internal class _orderResponse : AbstractOrderResponse
+    internal class _orderResponse : AbstractOrderResponse<string, string>
     {
         /// <summary>
         /// A stringified version of the order's direction.
         /// </summary>
-        public string direction { get; set; }
+        public override string direction { get; set; }
         /// <summary>
         /// A stringified version of the order's type.
         /// </summary>
-        public string orderType { get; set; }
+        public override string orderType { get; set; }
     }
 
     /// <summary>
     /// A client-facing version of an OrderResponse.
     /// </summary>
-    public class OrderResponse : AbstractOrderResponse
+    public class OrderResponse : AbstractOrderResponse<OrderType, OrderDirection>
     {
         /// <summary>
         /// The order's direction.
         /// </summary>
-        public OrderDirection direction { get; set; }
+        public override OrderDirection direction { get; set; }
         /// <summary>
         /// The order's type.
         /// </summary>
-        public OrderType orderType { get; set; }
+        public override OrderType orderType { get; set; }
 
         /// <summary>
         /// Creates a client-facing OrderResponse.
@@ -524,7 +524,7 @@ namespace StockFighter
     /// <summary>
     /// Base for all types of OrderResponse.
     /// </summary>
-    public abstract class AbstractOrderResponse : APIResponse
+    public abstract class AbstractOrderResponse<OrderTypeT, OrderDirectionT> : APIResponse
     {
         /// <summary>
         /// The stock's symbol.
@@ -570,6 +570,14 @@ namespace StockFighter
         /// If the order can still be filled.
         /// </summary>
         public bool open { get; set; }
+        /// <summary>
+        /// The type of the order. Override with a concrete type.
+        /// </summary>
+        public abstract OrderTypeT orderType { get; set; }
+        /// <summary>
+        /// The direction of the order. Override with a concrete type.
+        /// </summary>
+        public abstract OrderDirectionT direction { get; set; }
 
         /// <summary>
         /// Don't allow AbstractOrderResponse to be inherited from 
