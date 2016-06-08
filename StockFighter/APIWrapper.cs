@@ -799,7 +799,7 @@ namespace StockFighter
     /// Represents the base of an OrderRequest.
     /// Use to generate a concrete OrderRequest.
     /// </summary>
-    public abstract class AbstractOrderRequest<OrderRequestType, OrderDirectionType> : APIPost
+    public abstract class AbstractOrderRequest<OrderTypeT, OrderDirectionT> : APIPost
     {
         /// <summary>
         /// The trading account you are trading for.
@@ -824,11 +824,11 @@ namespace StockFighter
         /// <summary>
         /// The order type. Use a concrete type when inheriting.
         /// </summary>
-        public abstract OrderRequestType orderType { get; set; }
+        public abstract OrderTypeT orderType { get; set; }
         /// <summary>
         /// The order direction. Use a concrete type when inheriting.
         /// </summary>
-        public abstract OrderDirectionType direction { get; set; }
+        public abstract OrderDirectionT direction { get; set; }
     }
 
     /// <summary>
