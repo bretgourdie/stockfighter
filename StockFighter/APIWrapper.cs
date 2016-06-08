@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using RestSharp;
 using RestSharp.Authenticators;
 using System.Net.Http;
+using System.Configuration;
 
 namespace StockFighter
 {
@@ -19,10 +20,6 @@ namespace StockFighter
         /// API URL for interfacing.
         /// </summary>
         private const string URL = @"https://api.stockfighter.io/ob/api/";
-        /// <summary>
-        /// Default API Key for authorization.
-        /// </summary>
-        private const string apiKey = @"b5b8b7f29d5aa969da22279262c1e68ff82515c4";
 
         #region API Calls
 
@@ -165,6 +162,7 @@ namespace StockFighter
         /// <returns>Returns the response as T or null if invalid.</returns>
         private T postResponse<T>(APIPost post, params string[] args) where T : new()
         {
+            var apiKey = getApiKey();
             return performCommand<T>(post, Method.POST, apiKey, args);
         }
 
@@ -176,7 +174,13 @@ namespace StockFighter
         /// <returns>Returns a response in the form of T or null if invalid.</returns>
         private T getResponse<T>(params string[] args) where T : new()
         {
+            var apiKey = getApiKey();
             return performCommand<T>(null, Method.GET, apiKey, args);
+        }
+
+        private string getApiKey()
+        {
+            return ConfigurationManager.AppSettings["apiKey"];
         }
 
         /// <summary>

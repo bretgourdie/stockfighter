@@ -10,8 +10,9 @@ namespace StockFighter
     {
         static void Main(string[] args)
         {
-            var venue = @"BDBAEX";
-            var account = @"HAB74751055";
+            var venue = @"EZUJEX";
+            var account = @"HAS9911592";
+
             var wrapper = new APIWrapper();
 
             try
@@ -58,7 +59,7 @@ namespace StockFighter
                         OrderType.Market);
 
                     var orderResponse = wrapper.PostOrder(orderRequest);
-                    if (orderResponse != null)
+                    if (orderResponse != null && orderResponse.fills.Count > 0)
                     {
                         Console.WriteLine("\tFills:");
 
