@@ -14,7 +14,7 @@ using StockFighter.Requests;
 namespace StockFighter
 {
     /// <summary>
-    /// Static class to wrap Stockfighter API functions
+    /// Wraps Stockfighter API functions.
     /// </summary>
     public class APIWrapper
     {
