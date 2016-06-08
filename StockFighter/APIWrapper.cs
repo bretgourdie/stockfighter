@@ -220,7 +220,6 @@ namespace StockFighter
         /// <remarks>
         /// Any REST parameters will appear in the returned string as format hooks.
         /// </remarks>
-        /// <typeparam name="T">A deserialized <c ref="APIResponse"/> class.</typeparam>
         /// <returns>
         /// Returns a command string with the parameters 
         /// ready to be replaced by String.Format.
