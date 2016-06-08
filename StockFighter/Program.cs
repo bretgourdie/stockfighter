@@ -12,7 +12,6 @@ namespace StockFighter
         {
             var venue = @"PHKEX";
             var account = @"SH80055215";
-
             var wrapper = new APIWrapper();
 
             try
