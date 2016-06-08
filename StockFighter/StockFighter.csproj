@@ -61,6 +61,7 @@
     <Compile Include="Requests\_orderRequest.cs" />
     <Compile Include="Responses\AbstractOrderResponse.cs" />
     <Compile Include="Responses\APIResponse.cs" />
+    <Compile Include="Responses\Fill.cs" />
     <Compile Include="Responses\Heartbeat.cs" />
     <Compile Include="Responses\Orderbook.cs" />
     <Compile Include="Responses\OrderResponse.cs" />
