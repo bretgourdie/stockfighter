@@ -23,6 +23,31 @@ namespace StockFighter
         /// </summary>
         private const string URL = @"https://api.stockfighter.io/ob/api/";
 
+        /// <summary>
+        /// The account to use for all transactions. Used for read-only Account property.
+        /// </summary>
+        private string _account;
+
+        /// <summary>
+        /// The account to use for all transactions.
+        /// </summary>
+        public string Account
+        {
+            get
+            {
+                return _account;
+            }
+        }
+
+        /// <summary>
+        /// Initializes the APIWrapper for a specific account.
+        /// </summary>
+        /// <param name="account">The account to use for all transactions.</param>
+        public APIWrapper(string account)
+        {
+            _account = account;
+        }
+
         #region API Calls
 
         /// <summary>
