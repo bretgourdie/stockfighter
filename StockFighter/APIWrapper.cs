@@ -14,7 +14,7 @@ using StockFighter.Requests;
 namespace StockFighter
 {
     /// <summary>
-    /// Static class to wrap Stockfighter API functions
+    /// Wraps Stockfighter API functions.
     /// </summary>
     public class APIWrapper
     {
@@ -22,6 +22,23 @@ namespace StockFighter
         /// API URL for interfacing.
         /// </summary>
         private const string URL = @"https://api.stockfighter.io/ob/api/";
+
+        /// <summary>
+        /// The dictionary of API commands. 
+        /// 
+        /// Given an expected response, 
+        /// returns the command string to get that response.
+        /// </summary>
+        private Dictionary<Type, string> commandDictionary;
+
+
+        /// <summary>
+        /// Initializes the APIWrapper.
+        /// </summary>
+        public APIWrapper()
+        {
+            commandDictionary = getCommandDictionary();
+        }
 
         #region API Calls
 
@@ -156,6 +173,25 @@ namespace StockFighter
         }
 
         /// <summary>
+        /// Initializes a dictionary of API commands and returns it.
+        /// </summary>
+        /// <returns>Returns an initialized dictionary of API commands.</returns>
+        private Dictionary<Type, string> getCommandDictionary()
+        {
+            var dict = new Dictionary<Type, string>
+            {
+                { typeof(Heartbeat), "heartbeat" },
+                { typeof(VenueHeartbeat), "venues/{0}/heartbeat" },
+                { typeof(VenueStocks), "venues/{0}/stocks" },
+                { typeof(Orderbook), "venues/{0}/stocks/{1}" },
+                { typeof(Quote), "venues/{0}/stocks/{1}/quote" },
+                { typeof(_orderResponse), "venues/{0}/stocks/{1}/orders" }
+            };
+
+            return dict;
+        }
+
+        /// <summary>
         /// Posts the APIPost object and returns the response.
         /// </summary>
         /// <typeparam name="T">The type of response to return.</typeparam>
@@ -180,6 +216,10 @@ namespace StockFighter
             return performCommand<T>(null, Method.GET, apiKey, args);
         }
 
+        /// <summary>
+        /// Retrieves the standard API Key.
+        /// </summary>
+        /// <returns>Returns the standard API Key.</returns>
         private string getApiKey()
         {
             return ConfigurationManager.AppSettings["apiKey"];
@@ -232,21 +272,9 @@ namespace StockFighter
         /// </returns>
         private string getCommand(Type type)
         {
-            var switchDict = new Dictionary<Type, string>
+            if (commandDictionary.Keys.Contains(type))
             {
-                { typeof(Heartbeat), "heartbeat" },
-                { typeof(VenueHeartbeat), "venues/{0}/heartbeat" },
-                { typeof(VenueStocks), "venues/{0}/stocks" },
-                { typeof(Orderbook), "venues/{0}/stocks/{1}" },
-                { typeof(Quote), "venues/{0}/stocks/{1}/quote" },
-                { typeof(_orderResponse), "venues/{0}/stocks/{1}/orders" }
-            };
-
-            var dict = new Dictionary<Type, string>();
-
-            if (switchDict.Keys.Contains(type))
-            {
-                return switchDict[type];
+                return commandDictionary[type];
             }
 
             else
@@ -254,7 +282,6 @@ namespace StockFighter
                 throw new NotImplementedException(
                     "Class \"" + type.ToString() + "\" has not been implemented.");
             }
-
         }
 
         /// <summary>
