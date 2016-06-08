@@ -166,6 +166,10 @@ namespace StockFighter
             return client;
         }
 
+        /// <summary>
+        /// Initializes a dictionary of API commands and returns it.
+        /// </summary>
+        /// <returns>Returns an initialized dictionary of API commands.</returns>
         private Dictionary<Type, string> getCommandDictionary()
         {
             var dict = new Dictionary<Type, string>
