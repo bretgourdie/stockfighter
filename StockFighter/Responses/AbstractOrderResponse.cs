@@ -69,5 +69,6 @@ namespace StockFighter.Responses
         /// outside of the assembly.
         /// </summary>
         internal AbstractOrderResponse() { }
+
     }
 }
