@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace StockFighter.Requests
 {
     /// <summary>
-    /// The base class for all request classes.
+    /// Base class for all requests. Should be used for commonalities.
     /// </summary>
     public class APIRequest
     {
