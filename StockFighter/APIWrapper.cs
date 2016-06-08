@@ -30,7 +30,7 @@ namespace StockFighter
         /// Checks if the server is online.
         /// </summary>
         /// <returns>Returns true if the server is up; else, false.</returns>
-        public static bool Heartbeat()
+        public bool Heartbeat()
         {
             var heartbeatResponse = getResponse<Heartbeat>(new string[] { });
 
@@ -42,7 +42,7 @@ namespace StockFighter
         /// </summary>
         /// <param name="venue">The venue to check if available.</param>
         /// <returns>Returns true if the venue is available; else, false.</returns>
-        public static bool CheckVenue(string venue)
+        public bool CheckVenue(string venue)
         {
             var venueResponse = getResponse<VenueHeartbeat>(new string[] { venue });
 
@@ -54,7 +54,7 @@ namespace StockFighter
         /// </summary>
         /// <param name="venue">The venue to find stocks for.</param>
         /// <returns>Returns a VenueStocks response with an array of VenueStock.</returns>
-        public static VenueStocks GetStocks(string venue)
+        public VenueStocks GetStocks(string venue)
         {
             var getStocksResponse = getResponse<VenueStocks>(new string[] { venue });
 
@@ -75,7 +75,7 @@ namespace StockFighter
         /// <param name="venue">The venue for a particular stock.</param>
         /// <param name="stock">The stock to obtain an orderbook for.</param>
         /// <returns>Returns an OrderBook response with an array of asks and bids.</returns>
-        public static Orderbook GetOrderbook(string venue, string stock)
+        public Orderbook GetOrderbook(string venue, string stock)
         {
             var orderbook = getResponse<Orderbook>(new string[] { venue, stock });
 
@@ -101,7 +101,7 @@ namespace StockFighter
         /// <param name="venue">The venue for a particular stock.</param>
         /// <param name="stock">The stock to obtain a quote for.</param>
         /// <returns>Returns a Quote response.</returns>
-        public static Quote GetQuote(string venue, string stock)
+        public Quote GetQuote(string venue, string stock)
         {
             var quote = getResponse<Quote>(new string[] { venue, stock });
 
@@ -122,7 +122,7 @@ namespace StockFighter
         /// </summary>
         /// <param name="order">The order to post.</param>
         /// <returns>The <c ref="OrderResponse"/> for the request.</returns>
-        public static OrderResponse PostOrder(OrderRequest order)
+        public OrderResponse PostOrder(OrderRequest order)
         {
             var orderRequest = new _orderRequest(order);
 
@@ -150,7 +150,7 @@ namespace StockFighter
         /// Assembles a client with the default API key.
         /// </summary>
         /// <returns>Returns an instantiated, authorized RestClient.</returns>
-        private static RestClient getClient()
+        private RestClient getClient()
         {
             var client = new RestClient(URL);
             return client;
@@ -163,7 +163,7 @@ namespace StockFighter
         /// <param name="post">The JSON object to post.</param>
         /// <param name="args">The parameters for the REST command.</param>
         /// <returns>Returns the response as T or null if invalid.</returns>
-        private static T postResponse<T>(APIPost post, params string[] args) where T : new()
+        private T postResponse<T>(APIPost post, params string[] args) where T : new()
         {
             return performCommand<T>(post, Method.POST, apiKey, args);
         }
@@ -174,7 +174,7 @@ namespace StockFighter
         /// <typeparam name="T">The response to return.</typeparam>
         /// <param name="args">REST parameters, if needed.</param>
         /// <returns>Returns a response in the form of T or null if invalid.</returns>
-        private static T getResponse<T>(params string[] args) where T : new()
+        private T getResponse<T>(params string[] args) where T : new()
         {
             return performCommand<T>(null, Method.GET, apiKey, args);
         }
@@ -188,7 +188,7 @@ namespace StockFighter
         /// <param name="apiKey">The authorizing API key.</param>
         /// <param name="args">REST parameters, if needed.</param>
         /// <returns>Returns a response in the form of T or null if invalid.</returns>
-        private static T performCommand<T>(APIPost post, Method method, string apiKey, string[] args) where T : new()
+        private T performCommand<T>(APIPost post, Method method, string apiKey, string[] args) where T : new()
         {
             var authorizationParameter = @"X-Starfighter-Authorization";
 
@@ -220,12 +220,11 @@ namespace StockFighter
         /// <remarks>
         /// Any REST parameters will appear in the returned string as format hooks.
         /// </remarks>
-        /// <typeparam name="T">A deserialized <c ref="APIResponse"/> class.</typeparam>
         /// <returns>
         /// Returns a command string with the parameters 
         /// ready to be replaced by String.Format.
         /// </returns>
-        private static string getCommand(Type type)
+        private string getCommand(Type type)
         {
             var switchDict = new Dictionary<Type, string>
             {
@@ -257,7 +256,7 @@ namespace StockFighter
         /// </summary>
         /// <param name="response">The response received from the request.</param>
         /// <returns>Returns true if the request was completed; else, false.</returns>
-        private static bool IsSuccessful(IRestResponse response)
+        private bool IsSuccessful(IRestResponse response)
         {
             return response.ResponseStatus == ResponseStatus.Completed;
         }
@@ -413,31 +412,31 @@ namespace StockFighter
     /// <summary>
     /// Internal representation of an OrderResponse.
     /// </summary>
-    internal class _orderResponse : AbstractOrderResponse
+    internal class _orderResponse : AbstractOrderResponse<string, string>
     {
         /// <summary>
         /// A stringified version of the order's direction.
         /// </summary>
-        public string direction { get; set; }
+        public override string direction { get; set; }
         /// <summary>
         /// A stringified version of the order's type.
         /// </summary>
-        public string orderType { get; set; }
+        public override string orderType { get; set; }
     }
 
     /// <summary>
     /// A client-facing version of an OrderResponse.
     /// </summary>
-    public class OrderResponse : AbstractOrderResponse
+    public class OrderResponse : AbstractOrderResponse<OrderType, OrderDirection>
     {
         /// <summary>
         /// The order's direction.
         /// </summary>
-        public OrderDirection direction { get; set; }
+        public override OrderDirection direction { get; set; }
         /// <summary>
         /// The order's type.
         /// </summary>
-        public OrderType orderType { get; set; }
+        public override OrderType orderType { get; set; }
 
         /// <summary>
         /// Creates a client-facing OrderResponse.
@@ -525,7 +524,7 @@ namespace StockFighter
     /// <summary>
     /// Base for all types of OrderResponse.
     /// </summary>
-    public abstract class AbstractOrderResponse : APIResponse
+    public abstract class AbstractOrderResponse<OrderTypeT, OrderDirectionT> : APIResponse
     {
         /// <summary>
         /// The stock's symbol.
@@ -571,6 +570,14 @@ namespace StockFighter
         /// If the order can still be filled.
         /// </summary>
         public bool open { get; set; }
+        /// <summary>
+        /// The type of the order. Override with a concrete type.
+        /// </summary>
+        public abstract OrderTypeT orderType { get; set; }
+        /// <summary>
+        /// The direction of the order. Override with a concrete type.
+        /// </summary>
+        public abstract OrderDirectionT direction { get; set; }
 
         /// <summary>
         /// Don't allow AbstractOrderResponse to be inherited from 
@@ -602,7 +609,7 @@ namespace StockFighter
     /// <summary>
     /// Deserialized representation of an Order post.
     /// </summary>
-    internal class _orderRequest : AbstractOrderRequest 
+    internal class _orderRequest : AbstractOrderRequest<string, string>
     {
         /// <summary>
         /// Whether you want to buy or sell.
@@ -610,11 +617,11 @@ namespace StockFighter
         /// <remarks>
         /// To bid, use "buy". To ask, use "sell".
         /// </remarks>
-        public string direction { get; set; }
+        public override string direction { get; set; }
         /// <summary>
         /// The order type.
         /// </summary>
-        public string orderType { get; set; }
+        public override string orderType { get; set; }
 
         /// <summary>
         /// Translates a client's OrderRequest to an API-ready _orderRequest.
@@ -627,7 +634,7 @@ namespace StockFighter
             this.stock = orderRequest.stock;
             this.price = orderRequest.price;
             this.qty = orderRequest.qty;
-            this.orderType = getOrderType(orderRequest.ordertype);
+            this.orderType = getOrderType(orderRequest.orderType);
             this.direction = getDirection(orderRequest.direction);
         }
 
@@ -691,16 +698,16 @@ namespace StockFighter
     /// <summary>
     /// User-facing representation of an Order post.
     /// </summary>
-    public class OrderRequest : AbstractOrderRequest
+    public class OrderRequest : AbstractOrderRequest<OrderType, OrderDirection>
     {
         /// <summary>
         /// The type of the order request.
         /// </summary>
-        public OrderType ordertype { get; set; }
+        public override OrderType orderType { get; set; }
         /// <summary>
         /// The direction of the order request.
         /// </summary>
-        public OrderDirection direction { get; set; }
+        public override OrderDirection direction { get; set; }
 
         /// <summary>
         /// Creates an OrderRequest.
@@ -734,7 +741,7 @@ namespace StockFighter
             this.price = price;
             this.qty = qty;
             this.direction = direction;
-            this.ordertype = ordertype;
+            this.orderType = ordertype;
         }
     }
 
@@ -788,7 +795,11 @@ namespace StockFighter
         ImmediateOrCancel
     }
 
-    public abstract class AbstractOrderRequest : APIPost
+    /// <summary>
+    /// Represents the base of an OrderRequest.
+    /// Use to generate a concrete OrderRequest.
+    /// </summary>
+    public abstract class AbstractOrderRequest<OrderTypeT, OrderDirectionT> : APIPost
     {
         /// <summary>
         /// The trading account you are trading for.
@@ -810,6 +821,14 @@ namespace StockFighter
         /// The desired quantity.
         /// </summary>
         public virtual int qty { get; set; }
+        /// <summary>
+        /// The order type. Use a concrete type when inheriting.
+        /// </summary>
+        public abstract OrderTypeT orderType { get; set; }
+        /// <summary>
+        /// The order direction. Use a concrete type when inheriting.
+        /// </summary>
+        public abstract OrderDirectionT direction { get; set; }
     }
 
     /// <summary>
