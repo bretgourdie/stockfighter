@@ -23,6 +23,12 @@ namespace StockFighter
         /// </summary>
         private const string URL = @"https://api.stockfighter.io/ob/api/";
 
+        /// <summary>
+        /// The dictionary of API commands. 
+        /// 
+        /// Given an expected response, 
+        /// returns the command string to get that response.
+        /// </summary>
         private Dictionary<Type, string> commandDictionary;
 
 
