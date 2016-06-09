@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AbstractAPI.cs" />
     <Compile Include="GamemasterAPI.cs" />
+    <Compile Include="Responses\StartLevel.cs" />
     <Compile Include="StockFighterAPI.cs" />
     <Compile Include="OrderDirection.cs" />
     <Compile Include="OrderType.cs" />
