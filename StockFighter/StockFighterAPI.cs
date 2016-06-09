@@ -21,7 +21,7 @@ namespace StockFighter
         /// <summary>
         /// URL for interfacing with the StockFighter API.
         /// </summary>
-        protected override string _url = @"https://api.stockfighter.io/ob/api";
+        protected override string _url { get { return @"https://api.stockfighter.io/ob/api"; } }
 
         /// <summary>
         /// Initializes the APIWrapper.

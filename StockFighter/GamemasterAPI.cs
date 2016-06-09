@@ -16,7 +16,7 @@ namespace StockFighter
         /// <summary>
         /// URL for interfacing with the Gamemaster API.
         /// </summary>
-        protected override string _url = @"https://ww.stockfighter.io/gm";
+        protected override string _url { get { return @"https://ww.stockfighter.io/gm"; } }
 
         /// <summary>
         /// Initializes a dictionary of Gamemaster API commands and returns it.

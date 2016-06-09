@@ -15,7 +15,7 @@ namespace StockFighter
         /// <summary>
         /// API URL for interfacing with commands.
         /// </summary>
-        protected abstract string _url;
+        protected abstract string _url { get; }
 
         /// <summary>
         /// The lookup for a command for an expected response.

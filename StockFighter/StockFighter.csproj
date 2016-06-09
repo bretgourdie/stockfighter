@@ -50,7 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="APIWrapper.cs" />
+    <Compile Include="AbstractAPI.cs" />
+    <Compile Include="GamemasterAPI.cs" />
+    <Compile Include="StockFighterAPI.cs" />
     <Compile Include="OrderDirection.cs" />
     <Compile Include="OrderType.cs" />
     <Compile Include="Program.cs" />
