@@ -19,7 +19,7 @@ namespace StockFighter
     public class StockFighterAPI : AbstractAPI
     {
         /// <summary>
-        /// API URL for interfacing with commands.
+        /// URL for interfacing with the StockFighter API.
         /// </summary>
         protected override string _url = @"https://api.stockfighter.io/ob/api";
 
