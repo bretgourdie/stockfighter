@@ -16,7 +16,7 @@ namespace StockFighter
     /// <summary>
     /// Wraps Stockfighter API functions.
     /// </summary>
-    public class APIWrapper
+    public class StockFighterAPI
     {
         /// <summary>
         /// API URL for interfacing.
@@ -35,7 +35,7 @@ namespace StockFighter
         /// <summary>
         /// Initializes the APIWrapper.
         /// </summary>
-        public APIWrapper()
+        public StockFighterAPI()
         {
             commandDictionary = getCommandDictionary();
         }

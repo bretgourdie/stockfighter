@@ -12,7 +12,7 @@ namespace StockFighter
         {
             var venue = @"HYBEX";
             var account = @"WFB71749172";
-            var wrapper = new APIWrapper();
+            var wrapper = new StockFighterAPI();
 
             try
             {
