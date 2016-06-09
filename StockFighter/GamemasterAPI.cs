@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using RestSharp;
+using StockFighter.Responses;
 
 namespace StockFighter
 {
@@ -26,7 +27,7 @@ namespace StockFighter
         {
             var dict = new Dictionary<Type, string>
             {
-
+                {typeof(StartLevel), "/levels/{0}"}
             };
 
             return dict;
