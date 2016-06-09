@@ -15,7 +15,7 @@ namespace StockFighter
         /// <summary>
         /// API URL for interfacing with commands.
         /// </summary>
-        protected abstract string _url { get; }
+        protected abstract string url { get; }
 
         /// <summary>
         /// The lookup for a command for an expected response.
@@ -76,7 +76,7 @@ namespace StockFighter
         /// <returns>Returns an instantiated, authorized RestClient.</returns>
         protected RestClient getClient()
         {
-            var client = new RestClient(_url);
+            var client = new RestClient(url);
             return client;
         }
 
