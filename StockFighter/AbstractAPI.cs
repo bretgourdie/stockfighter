@@ -76,7 +76,7 @@ namespace StockFighter
         /// <param name="post">The JSON object to post.</param>
         /// <param name="args">The parameters for the REST command.</param>
         /// <returns>Returns the response as T or null if invalid.</returns>
-        private T postResponse<T>(APIRequest post, params string[] args) where T : new()
+        protected T postResponse<T>(APIRequest post, params string[] args) where T : new()
         {
             return performCommand<T>(post, Method.POST, this.APIKey, args);
         }
@@ -87,7 +87,7 @@ namespace StockFighter
         /// <typeparam name="T">The response to return.</typeparam>
         /// <param name="args">REST parameters, if needed.</param>
         /// <returns>Returns a response in the form of T or null if invalid.</returns>
-        private T getResponse<T>(params string[] args) where T : new()
+        protected T getResponse<T>(params string[] args) where T : new()
         {
             return performCommand<T>(null, Method.GET, this.APIKey, args);
         }
