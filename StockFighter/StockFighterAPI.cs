@@ -16,21 +16,12 @@ namespace StockFighter
     /// <summary>
     /// Wraps Stockfighter API functions.
     /// </summary>
-    public class StockFighterAPI
+    public class StockFighterAPI : AbstractAPI
     {
         /// <summary>
-        /// API URL for interfacing.
+        /// API URL for interfacing with commands.
         /// </summary>
-        private const string URL = @"https://api.stockfighter.io/ob/api/";
-
-        /// <summary>
-        /// The dictionary of API commands. 
-        /// 
-        /// Given an expected response, 
-        /// returns the command string to get that response.
-        /// </summary>
-        private Dictionary<Type, string> commandDictionary;
-
+        protected override string _url = @"https://api.stockfighter.io/ob/api";
 
         /// <summary>
         /// Initializes the APIWrapper.
@@ -162,136 +153,24 @@ namespace StockFighter
         #endregion
         #region Privates
 
-        /// <summary>
-        /// Assembles a client with the default API key.
-        /// </summary>
-        /// <returns>Returns an instantiated, authorized RestClient.</returns>
-        private RestClient getClient()
-        {
-            var client = new RestClient(URL);
-            return client;
-        }
 
         /// <summary>
         /// Initializes a dictionary of API commands and returns it.
         /// </summary>
         /// <returns>Returns an initialized dictionary of API commands.</returns>
-        private Dictionary<Type, string> getCommandDictionary()
+        protected override Dictionary<Type, string> getCommandDictionary()
         {
             var dict = new Dictionary<Type, string>
             {
-                { typeof(Heartbeat), "heartbeat" },
-                { typeof(VenueHeartbeat), "venues/{0}/heartbeat" },
-                { typeof(VenueStocks), "venues/{0}/stocks" },
-                { typeof(Orderbook), "venues/{0}/stocks/{1}" },
-                { typeof(Quote), "venues/{0}/stocks/{1}/quote" },
-                { typeof(_orderResponse), "venues/{0}/stocks/{1}/orders" }
+                { typeof(Heartbeat), "/heartbeat" },
+                { typeof(VenueHeartbeat), "/venues/{0}/heartbeat" },
+                { typeof(VenueStocks), "/venues/{0}/stocks" },
+                { typeof(Orderbook), "/venues/{0}/stocks/{1}" },
+                { typeof(Quote), "/venues/{0}/stocks/{1}/quote" },
+                { typeof(_orderResponse), "/venues/{0}/stocks/{1}/orders" }
             };
 
             return dict;
-        }
-
-        /// <summary>
-        /// Posts the APIPost object and returns the response.
-        /// </summary>
-        /// <typeparam name="T">The type of response to return.</typeparam>
-        /// <param name="post">The JSON object to post.</param>
-        /// <param name="args">The parameters for the REST command.</param>
-        /// <returns>Returns the response as T or null if invalid.</returns>
-        private T postResponse<T>(APIRequest post, params string[] args) where T : new()
-        {
-            var apiKey = getApiKey();
-            return performCommand<T>(post, Method.POST, apiKey, args);
-        }
-
-        /// <summary>
-        /// Executes a command and returns an expected response.
-        /// </summary>
-        /// <typeparam name="T">The response to return.</typeparam>
-        /// <param name="args">REST parameters, if needed.</param>
-        /// <returns>Returns a response in the form of T or null if invalid.</returns>
-        private T getResponse<T>(params string[] args) where T : new()
-        {
-            var apiKey = getApiKey();
-            return performCommand<T>(null, Method.GET, apiKey, args);
-        }
-
-        /// <summary>
-        /// Retrieves the standard API Key.
-        /// </summary>
-        /// <returns>Returns the standard API Key.</returns>
-        private string getApiKey()
-        {
-            return ConfigurationManager.AppSettings["apiKey"];
-        }
-
-        /// <summary>
-        /// Performs the specified method using specified arguments and returns the specified response.
-        /// </summary>
-        /// <typeparam name="T">The type of response to return.</typeparam>
-        /// <param name="post">The POST object to serialize for the request, if needed.</param>
-        /// <param name="method">The method to utilize the REST service with.</param>
-        /// <param name="apiKey">The authorizing API key.</param>
-        /// <param name="args">REST parameters, if needed.</param>
-        /// <returns>Returns a response in the form of T or null if invalid.</returns>
-        private T performCommand<T>(APIRequest post, Method method, string apiKey, string[] args) where T : new()
-        {
-            var authorizationParameter = @"X-Starfighter-Authorization";
-
-            var client = getClient();
-
-            var rawCommandString = getCommand(typeof(T));
-
-            var commandString = String.Format(rawCommandString, args);
-
-            var request = new RestRequest(commandString, method);
-
-            if (post != null)
-            {
-                request.RequestFormat = DataFormat.Json;
-
-                request.AddParameter(authorizationParameter, apiKey, ParameterType.HttpHeader);
-
-                request.AddBody(post);
-            }
-
-            var response = client.Execute<T>(request);
-
-            return response.Data;
-        }
-
-        /// <summary>
-        /// Translation matrix for a deserialized response to the URL.
-        /// </summary>
-        /// <remarks>
-        /// Any REST parameters will appear in the returned string as format hooks.
-        /// </remarks>
-        /// <returns>
-        /// Returns a command string with the parameters 
-        /// ready to be replaced by String.Format.
-        /// </returns>
-        private string getCommand(Type type)
-        {
-            if (commandDictionary.Keys.Contains(type))
-            {
-                return commandDictionary[type];
-            }
-
-            else
-            {
-                throw new NotImplementedException(
-                    "Class \"" + type.ToString() + "\" has not been implemented.");
-            }
-        }
-
-        /// <summary>
-        /// Checks if the response was successful.
-        /// </summary>
-        /// <param name="response">The response received from the request.</param>
-        /// <returns>Returns true if the request was completed; else, false.</returns>
-        private bool IsSuccessful(IRestResponse response)
-        {
-            return response.ResponseStatus == ResponseStatus.Completed;
         }
 
         #endregion
