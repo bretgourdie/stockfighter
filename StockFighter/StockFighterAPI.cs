@@ -155,9 +155,9 @@ namespace StockFighter
 
 
         /// <summary>
-        /// Initializes a dictionary of API commands and returns it.
+        /// Initializes a dictionary of StockFighter API commands and returns it.
         /// </summary>
-        /// <returns>Returns an initialized dictionary of API commands.</returns>
+        /// <returns>Returns an initialized dictionary of StockFighter API commands.</returns>
         protected override Dictionary<Type, string> getCommandDictionary()
         {
             var dict = new Dictionary<Type, string>
