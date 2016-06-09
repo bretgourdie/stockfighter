@@ -10,6 +10,9 @@ using System.Configuration;
 
 namespace StockFighter
 {
+    /// <summary>
+    /// Abstract API wrapper. Does the heavy lifting.
+    /// </summary>
     public abstract class AbstractAPI
     {
         /// <summary>
