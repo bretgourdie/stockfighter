@@ -11,17 +11,12 @@ namespace StockFighter
     /// <summary>
     /// Wraps Gamemaster API functions.
     /// </summary>
-    public class GamemasterAPI
+    public class GamemasterAPI : AbstractAPI
     {
-        private string _apiKey;
+        /// <summary>
+        /// URL for interfacing with the Gamemaster API.
+        /// </summary>
+        protected override string _url = @"https://ww.stockfighter.io/gm";
 
-        public string APIKey { get; }
-
-        public GamemasterAPI(string apiKey)
-        {
-
-        }
-
-        
     }
 }
