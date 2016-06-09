@@ -17,10 +17,21 @@ namespace StockFighter
         /// </summary>
         protected abstract string _url;
 
+        /// <summary>
+        /// The lookup for a command for an expected response.
+        /// 
+        /// Define translations in <c ref="getCommandDictionary()"/>.
+        /// </summary>
         protected Dictionary<Type, string> commandDictionary;
 
+        /// <summary>
+        /// The internal API Key.
+        /// </summary>
         private string _apiKey;
 
+        /// <summary>
+        /// The API Key to use for the API instance.
+        /// </summary>
         public string APIKey
         {
             get
