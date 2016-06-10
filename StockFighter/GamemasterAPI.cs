@@ -27,10 +27,12 @@ namespace StockFighter
         {
             var dict = new Dictionary<Type, string>
             {
-                {typeof(StartLevel), "/levels/{0}"}
+                {typeof(StartedLevel), "/levels/{0}"}
             };
 
             return dict;
         }
+
+        public StartedLevel 
     }
 }

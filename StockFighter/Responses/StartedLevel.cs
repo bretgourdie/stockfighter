@@ -11,7 +11,7 @@ namespace StockFighter.Responses
     /// <summary>
     /// Response from starting a StockFighter level.
     /// </summary>
-    public class StartLevel : APIResponse
+    public class StartedLevel : APIResponse
     {
         /// <summary>
         /// The account for the level.
