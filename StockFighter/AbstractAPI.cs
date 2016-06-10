@@ -127,12 +127,12 @@ namespace StockFighter
 
             var request = new RestRequest(commandString, method);
 
+            request.RequestFormat = DataFormat.Json;
+
+            request.AddParameter(authorizationParameter, apiKey, ParameterType.HttpHeader);
+
             if (post != null)
             {
-                request.RequestFormat = DataFormat.Json;
-
-                request.AddParameter(authorizationParameter, apiKey, ParameterType.HttpHeader);
-
                 request.AddBody(post);
             }
 
