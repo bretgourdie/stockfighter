@@ -42,6 +42,10 @@ namespace StockFighter
         {
             var startedLevel = postResponse<StartedLevel>(null, levelName);
 
+            if (startedLevel == null)
+            {
+                throw new ArgumentException("Unable to start the level.");
+            }
             return startedLevel;
         }
     }
