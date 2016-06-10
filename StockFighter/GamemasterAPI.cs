@@ -33,6 +33,16 @@ namespace StockFighter
             return dict;
         }
 
-        public StartedLevel 
+        /// <summary>
+        /// Start the specified level.
+        /// </summary>
+        /// <param name="levelName">The name of the level to start.</param>
+        /// <returns>Returns information about the started level.</returns>
+        public StartedLevel StartLevel(string levelName)
+        {
+            var startedLevel = postResponse<StartedLevel>(null, levelName);
+
+            return startedLevel;
+        }
     }
 }
