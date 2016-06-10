@@ -88,11 +88,16 @@ namespace StockFighter
         /// </summary>
         /// <typeparam name="T">The type of response to return.</typeparam>
         /// <param name="post">The JSON object to post.</param>
+        /// <param name="authParameterType">The type of parameter to use for authentication.</param>
         /// <param name="args">The parameters for the REST command.</param>
         /// <returns>Returns the response as T or null if invalid.</returns>
-        protected T postResponse<T>(APIRequest post, params string[] args) where T : new()
+        protected T postResponse<T>(
+            APIRequest post, 
+            ParameterType authParameterType, 
+            params string[] args) 
+            where T : new()
         {
-            return performCommand<T>(post, Method.POST, this.APIKey, args);
+            return performCommand<T>(post, Method.POST, authParameterType, this.APIKey, args);
         }
 
         /// <summary>
@@ -103,7 +108,7 @@ namespace StockFighter
         /// <returns>Returns a response in the form of T or null if invalid.</returns>
         protected T getResponse<T>(params string[] args) where T : new()
         {
-            return performCommand<T>(null, Method.GET, this.APIKey, args);
+            return performCommand<T>(null, Method.GET, ParameterType.HttpHeader, this.APIKey, args);
         }
 
         /// <summary>
@@ -112,10 +117,17 @@ namespace StockFighter
         /// <typeparam name="T">The type of response to return.</typeparam>
         /// <param name="post">The POST object to serialize for the request, if needed.</param>
         /// <param name="method">The method to utilize the REST service with.</param>
+        /// <param name="authParameterType">The type of parameter to use for authentication.</param>
         /// <param name="apiKey">The authorizing API key.</param>
         /// <param name="args">REST parameters, if needed.</param>
         /// <returns>Returns a response in the form of T or null if invalid.</returns>
-        private T performCommand<T>(APIRequest post, Method method, string apiKey, string[] args) where T : new()
+        private T performCommand<T>(
+            APIRequest post, 
+            Method method, 
+            ParameterType authParameterType, 
+            string apiKey, 
+            string[] args) 
+            where T : new()
         {
             var authorizationParameter = @"X-Starfighter-Authorization";
 
@@ -129,7 +141,7 @@ namespace StockFighter
 
             request.RequestFormat = DataFormat.Json;
 
-            request.AddParameter(authorizationParameter, apiKey, ParameterType.HttpHeader);
+            request.AddParameter(authorizationParameter, apiKey, authParameterType);
 
             if (post != null)
             {

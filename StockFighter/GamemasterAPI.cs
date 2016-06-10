@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using RestSharp;
 using StockFighter.Responses;
+using StockFighter.Requests;
 
 namespace StockFighter
 {
@@ -40,7 +41,7 @@ namespace StockFighter
         /// <returns>Returns information about the started level.</returns>
         public StartedLevel StartLevel(string levelName)
         {
-            var startedLevel = postResponse<StartedLevel>(null, levelName);
+            var startedLevel = postResponse<StartedLevel>(null, ParameterType.Cookie, levelName);
 
             if (startedLevel == null)
             {

@@ -135,6 +135,7 @@ namespace StockFighter
 
             var orderResponse = postResponse<_orderResponse>(
                 orderRequest,
+                ParameterType.HttpHeader,
                 new string[] { orderRequest.venue, orderRequest.stock });
 
             if(orderResponse != null)
