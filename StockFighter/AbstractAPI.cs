@@ -131,6 +131,11 @@ namespace StockFighter
         {
             var authorizationParameter = @"X-Starfighter-Authorization";
 
+            if (typeof(T) == typeof(Responses.StartedLevel))
+            {
+                authorizationParameter = "api_key";
+            }
+
             var client = getClient();
 
             var rawCommandString = getCommand(typeof(T));
