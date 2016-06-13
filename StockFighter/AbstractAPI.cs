@@ -166,7 +166,7 @@ namespace StockFighter
         /// <param name="request">The request to set RequestFormat of.</param>
         /// <param name="requestFormat">The target RequestFormat.</param>
         /// <returns>Returns a RestRequest with the specified RequestFormat.</returns>
-        protected RestRequest setRequestFormat(
+        protected virtual RestRequest setRequestFormat(
             RestRequest request,
             DataFormat requestFormat)
         {
@@ -183,7 +183,7 @@ namespace StockFighter
         /// <param name="authorizationValue">The "Value" of the Key-Value authorization pair.</param>
         /// <param name="authParameterType">The ParameterType to authorize as.</param>
         /// <returns>Returns an authorized RestRequest.</returns>
-        protected RestRequest authorizeRequest(
+        protected virtual RestRequest authorizeRequest(
             RestRequest request,
             string authorizationKey,
             string authorizationValue,
