@@ -139,9 +139,9 @@ namespace StockFighter
 
             var request = new RestRequest(commandString, method);
 
-            request.RequestFormat = DataFormat.Json;
+            request = setRequestFormat(request, DataFormat.Json);
 
-            request.AddParameter(authorizationParameter, apiKey, authParameterType);
+            request = authorizeRequest(request, authorizationParameter, apiKey, authParameterType);
 
             if (post != null)
             {
@@ -151,6 +151,40 @@ namespace StockFighter
             var response = client.Execute<T>(request);
 
             return response.Data;
+        }
+
+        /// <summary>
+        /// Sets the request's RequestFormat to the specified DataFormat.
+        /// </summary>
+        /// <param name="request">The request to set RequestFormat of.</param>
+        /// <param name="requestFormat">The target RequestFormat.</param>
+        /// <returns>Returns a RestRequest with the specified RequestFormat.</returns>
+        protected virtual RestRequest setRequestFormat(
+            RestRequest request,
+            DataFormat requestFormat)
+        {
+            request.RequestFormat = requestFormat;
+
+            return request;
+        }
+
+        /// <summary>
+        /// Authorizes the RestRequest using the Key-Value pair and the supplied ParameterType.
+        /// </summary>
+        /// <param name="request">The request to authorize.</param>
+        /// <param name="authorizationKey">The "Key" of the Key-Value authorization pair.</param>
+        /// <param name="authorizationValue">The "Value" of the Key-Value authorization pair.</param>
+        /// <param name="authParameterType">The ParameterType to authorize as.</param>
+        /// <returns>Returns an authorized RestRequest.</returns>
+        protected virtual RestRequest authorizeRequest(
+            RestRequest request,
+            string authorizationKey,
+            string authorizationValue,
+            ParameterType authParameterType)
+        {
+            request.AddParameter(authorizationKey, authorizationValue, authParameterType);
+
+            return request;
         }
 
         /// <summary>
