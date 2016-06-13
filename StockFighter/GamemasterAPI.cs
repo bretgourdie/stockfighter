@@ -49,35 +49,5 @@ namespace StockFighter
             }
             return startedLevel;
         }
-
-        /// <summary>
-        /// Overrides the default authorization method to include the cookie declaration in the resource property.
-        /// </summary>
-        /// <param name="request">The RestRequest to authorize.</param>
-        /// <param name="authorizationKey">Disregarded; using "api_key".</param>
-        /// <param name="authorizationValue">The API Key to authenticate against.</param>
-        /// <param name="authParameterType">Disregarded; not used.</param>
-        /// <returns>Returns an authenticated RestRequest based off the GamemasterAPI spec.</returns>
-        protected override RestRequest authorizeRequest(
-            RestRequest request,
-            string authorizationKey,
-            string authorizationValue,
-            ParameterType authParameterType)
-        {
-            request.Resource += " Cookie:api_key=" + authorizationValue;
-
-            return request;
-        }
-
-        /// <summary>
-        /// Overrides the default setRequestFormat method to not set the request format.
-        /// </summary>
-        /// <param name="request">The request to set the request format of.</param>
-        /// <param name="requestFormat">Disregarded.</param>
-        /// <returns>Returns the original RestRequest.</returns>
-        protected override RestRequest setRequestFormat(RestRequest request, DataFormat requestFormat)
-        {
-            return request;
-        }
     }
 }
