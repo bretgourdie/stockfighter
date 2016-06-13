@@ -21,6 +21,11 @@ namespace StockFighter
         protected abstract string url { get; }
 
         /// <summary>
+        /// Authorization Paramter Name (e.g. "X-Starfighter-Authorization") for requests.
+        /// </summary>
+        protected abstract string authorizationParameterName { get; }
+
+        /// <summary>
         /// The lookup for a command for an expected response.
         /// 
         /// Define translations in <c ref="getCommandDictionary()"/>.
@@ -129,8 +134,6 @@ namespace StockFighter
             string[] args) 
             where T : new()
         {
-            var authorizationParameter = @"X-Starfighter-Authorization";
-
             var client = getClient();
 
             var rawCommandString = getCommand(typeof(T));
@@ -141,7 +144,11 @@ namespace StockFighter
 
             request = setRequestFormat(request, DataFormat.Json);
 
-            request = authorizeRequest(request, authorizationParameter, apiKey, authParameterType);
+            request = authorizeRequest(
+                request, 
+                this.authorizationParameterName, 
+                apiKey, 
+                authParameterType);
 
             if (post != null)
             {

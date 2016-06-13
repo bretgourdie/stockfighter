@@ -24,6 +24,11 @@ namespace StockFighter
         protected override string url { get { return @"https://api.stockfighter.io/ob/api"; } }
 
         /// <summary>
+        /// Authorization parameter name for StockFighter API calls.
+        /// </summary>
+        protected override string authorizationParameterName { get { return @"X-Starfighter-Authorization"; } }
+
+        /// <summary>
         /// Initializes the APIWrapper.
         /// </summary>
         public StockFighterAPI()

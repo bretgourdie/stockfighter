@@ -21,6 +21,11 @@ namespace StockFighter
         protected override string url { get { return @"https://www.stockfighter.io/gm"; } }
 
         /// <summary>
+        /// Authorization parameter name for GM API calls.
+        /// </summary>
+        protected override string authorizationParameterName { get { return @"Cookie:api_key"; } }
+
+        /// <summary>
         /// Initializes a dictionary of Gamemaster API commands and returns it.
         /// </summary>
         /// <returns>Returns an initialized dictionary of Gamemaster API commands.</returns>
