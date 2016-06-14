@@ -89,6 +89,23 @@ namespace StockFighter
         }
 
         /// <summary>
+        /// Gets details about the specified instance.
+        /// </summary>
+        /// <param name="instanceId">The instance's ID to retrieve details for.</param>
+        /// <returns>Returns information about the specified instance.</returns>
+        public InstanceDetails GetInstanceDetails(int instanceId)
+        {
+            var details = getResponse<InstanceDetails>(ParameterType.Cookie, instanceId.ToString());
+
+            if (details == null)
+            {
+                throw new ArgumentException("Unable to get instance details for instance ID\""
+                    + instanceId.ToString() + "\".");
+            }
+            return details;
+        }
+
+        /// <summary>
         /// Helper method to reduce code in instance-affecting response methods.
         /// </summary>
         /// <typeparam name="T">The expected response type.</typeparam>
