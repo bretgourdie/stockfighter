@@ -55,6 +55,7 @@
     <Compile Include="Responses\RestartedLevel.cs" />
     <Compile Include="Responses\ResumedLevel.cs" />
     <Compile Include="Responses\StartedLevel.cs" />
+    <Compile Include="Responses\StoppedLevel.cs" />
     <Compile Include="StockFighterAPI.cs" />
     <Compile Include="OrderDirection.cs" />
     <Compile Include="OrderType.cs" />
