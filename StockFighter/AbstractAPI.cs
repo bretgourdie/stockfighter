@@ -183,7 +183,7 @@ namespace StockFighter
         /// <param name="authorizationValue">The "Value" of the Key-Value authorization pair.</param>
         /// <param name="authParameterType">The ParameterType to authorize as.</param>
         /// <returns>Returns an authorized RestRequest.</returns>
-        protected virtual RestRequest authorizeRequest(
+        protected RestRequest authorizeRequest(
             RestRequest request,
             string authorizationKey,
             string authorizationValue,
