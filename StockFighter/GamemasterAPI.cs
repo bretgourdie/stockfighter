@@ -62,19 +62,50 @@ namespace StockFighter
         /// Restarts the specified instance.
         /// </summary>
         /// <param name="instanceId">The instance's ID to restart.</param>
-        /// <returns>Returns information about the restarted level.</returns>
+        /// <returns>Returns information about the restarted instance.</returns>
         public RestartedLevel RestartLevel(int instanceId)
         {
-            var restartedLevel = postResponse<RestartedLevel>(
-                null, 
-                ParameterType.Cookie, 
-                instanceId.ToString());
+            return setLevelPlayback<RestartedLevel>(instanceId);
+        }
 
-            if (restartedLevel == null)
+        /// <summary>
+        /// Resumes the specified instance.
+        /// </summary>
+        /// <param name="instanceId">The instance's ID to resume.</param>
+        /// <returns>Returns information about the resumed instance.</returns>
+        public ResumedLevel ResumeLevel(int instanceId)
+        {
+            return setLevelPlayback<ResumedLevel>(instanceId);
+        }
+
+        /// <summary>
+        /// Stops the specified instance.
+        /// </summary>
+        /// <param name="instanceId">The instance's ID to stop.</param>
+        /// <returns>Returns information about the stopped instance.</returns>
+        public StoppedLevel StopLevel(int instanceId)
+        {
+            return setLevelPlayback<StoppedLevel>(instanceId);
+        }
+
+        /// <summary>
+        /// Helper method to reduce code in instance-affecting response methods.
+        /// </summary>
+        /// <typeparam name="T">The expected response type.</typeparam>
+        /// <param name="instanceId">The instance to act upon.</param>
+        /// <returns>Returns information about the specified action and instance.</returns>
+        protected T setLevelPlayback<T>(int instanceId) where T : new()
+        {
+            T response = postResponse<T>(null, ParameterType.Cookie, instanceId.ToString());
+
+            if (response == null)
             {
-                throw new ArgumentException("Unable to restart instance " + instanceId.ToString());
+                throw new ArgumentException("Unable to retrieve response \""
+                + typeof(T).ToString() + 
+                "\" with instanceId \"" + instanceId.ToString() + "\".");
             }
-            return restartedLevel;
+
+            return response;
         }
     }
 }
