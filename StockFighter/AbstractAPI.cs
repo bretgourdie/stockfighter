@@ -113,7 +113,19 @@ namespace StockFighter
         /// <returns>Returns a response in the form of T or null if invalid.</returns>
         protected T getResponse<T>(params string[] args) where T : new()
         {
-            return performCommand<T>(null, Method.GET, ParameterType.HttpHeader, this.APIKey, args);
+            return getResponse<T>(ParameterType.HttpHeader, args);
+        }
+
+        /// <summary>
+        /// Executes a command and returns an expected response.
+        /// </summary>
+        /// <typeparam name="T">The response to return.</typeparam>
+        /// <param name="authParameterType">The type of parameter to use for authentication.</param>
+        /// <param name="args">REST parameters, if needed.</param>
+        /// <returns>Returns the response as T or null if invalid.</returns>
+        protected T getResponse<T>(ParameterType authParameterType, params string[] args) where T : new()
+        {
+            return performCommand<T>(null, Method.GET, ParameterType.Cookie, this.APIKey, args);
         }
 
         /// <summary>
