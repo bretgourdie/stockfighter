@@ -23,7 +23,7 @@ namespace StockFighter
         /// <summary>
         /// Authorization parameter name for GM API calls.
         /// </summary>
-        protected override string authorizationParameterName { get { return @" Cookie:api_key="; } }
+        protected override string authorizationParameterName { get { return @"api_key"; } }
 
         /// <summary>
         /// Initializes a dictionary of Gamemaster API commands and returns it.
@@ -53,21 +53,6 @@ namespace StockFighter
                 throw new ArgumentException("Unable to start the level.");
             }
             return startedLevel;
-        }
-
-        /// <summary>
-        /// Overridden to simplify the POST request.
-        /// </summary>
-        /// <param name="request">The RestRequest.</param>
-        /// <param name="authorizationKey">The authorization parameter name.</param>
-        /// <param name="authorizationValue">The authorization parameter value.</param>
-        /// <param name="authParameterType">Disregarded.</param>
-        /// <returns>Returns an authorized RestRequest.</returns>
-        protected override RestRequest authorizeRequest(RestRequest request, string authorizationKey, string authorizationValue, ParameterType authParameterType)
-        {
-            request.Resource += authorizationKey + authorizationValue;
-
-            return request;
         }
 
         /// <summary>
