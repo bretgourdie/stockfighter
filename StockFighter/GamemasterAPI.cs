@@ -34,7 +34,9 @@ namespace StockFighter
             var dict = new Dictionary<Type, string>
             {
                 {typeof(StartedLevel), "/levels/{0}"},
-                {typeof(RestartedLevel), "/instances/{0}/restart"}
+                {typeof(RestartedLevel), "/instances/{0}/restart"},
+                {typeof(StoppedLevel), "/instances/{0}/stop"},
+                {typeof(ResumedLevel), "/instances/{0}/resume"}
             };
 
             return dict;
