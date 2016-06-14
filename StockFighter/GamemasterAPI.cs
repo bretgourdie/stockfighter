@@ -56,6 +56,25 @@ namespace StockFighter
         }
 
         /// <summary>
+        /// Restarts the specified instance.
+        /// </summary>
+        /// <param name="instanceId">The instance's ID to restart.</param>
+        /// <returns>Returns information about the restarted level.</returns>
+        public RestartedLevel RestartLevel(int instanceId)
+        {
+            var restartedLevel = postResponse<RestartedLevel>(
+                null, 
+                ParameterType.Cookie, 
+                instanceId.ToString());
+
+            if (restartedLevel == null)
+            {
+                throw new ArgumentException("Unable to restart instance " + instanceId.ToString());
+            }
+            return restartedLevel;
+        }
+
+        /// <summary>
         /// Overridden to not add a parameter to the POST request.
         /// </summary>
         /// <param name="request">The RestRequest.</param>
