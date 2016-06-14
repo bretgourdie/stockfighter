@@ -166,7 +166,7 @@ namespace StockFighter
         /// <param name="request">The request to set RequestFormat of.</param>
         /// <param name="requestFormat">The target RequestFormat.</param>
         /// <returns>Returns a RestRequest with the specified RequestFormat.</returns>
-        protected virtual RestRequest setRequestFormat(
+        protected RestRequest setRequestFormat(
             RestRequest request,
             DataFormat requestFormat)
         {

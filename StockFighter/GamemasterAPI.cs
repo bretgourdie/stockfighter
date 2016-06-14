@@ -76,16 +76,5 @@ namespace StockFighter
             }
             return restartedLevel;
         }
-
-        /// <summary>
-        /// Overridden to not add a parameter to the POST request.
-        /// </summary>
-        /// <param name="request">The RestRequest.</param>
-        /// <param name="requestFormat">Disregarded.</param>
-        /// <returns>Returns the original RestRequest.</returns>
-        protected override RestRequest setRequestFormat(RestRequest request, DataFormat requestFormat)
-        {
-            return request;
-        }
     }
 }
