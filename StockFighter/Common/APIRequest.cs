@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockFighter.Requests
+namespace StockFighter.Common
 {
     /// <summary>
     /// Base class for all requests. Should be used for commonalities.

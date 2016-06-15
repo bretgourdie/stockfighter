@@ -8,7 +8,7 @@ using RestSharp;
 using StockFighter.Requests;
 using System.Configuration;
 
-namespace StockFighter
+namespace StockFighter.Common
 {
     /// <summary>
     /// Abstract API wrapper. Does the heavy lifting.
