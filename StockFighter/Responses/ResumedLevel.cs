@@ -9,7 +9,7 @@ namespace StockFighter.Responses
     /// <summary>
     /// Deserialized response to a resumed level command.
     /// </summary>
-    class ResumedLevel : APIResponse
+    public class ResumedLevel : APIResponse
     {
     }
 }

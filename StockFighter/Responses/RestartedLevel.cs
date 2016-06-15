@@ -9,7 +9,7 @@ namespace StockFighter.Responses
     /// <summary>
     /// Deserialized response from a Restart Level command.
     /// </summary>
-    class RestartedLevel : APIResponse
+    public class RestartedLevel : APIResponse
     {
     }
 }
