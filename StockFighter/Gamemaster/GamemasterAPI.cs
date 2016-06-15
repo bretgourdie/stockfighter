@@ -8,7 +8,7 @@ using RestSharp;
 using StockFighter.Responses;
 using StockFighter.Requests;
 
-namespace StockFighter
+namespace StockFighter.Gamemaster
 {
     /// <summary>
     /// Wraps Gamemaster API functions.
