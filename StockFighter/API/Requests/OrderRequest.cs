@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockFighter.Requests
+using StockFighter.API;
+
+namespace StockFighter.API.Requests
 {
     /// <summary>
     /// User-facing representation of an Order post.

@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 using RestSharp;
-using StockFighter.Responses;
-using StockFighter.Requests;
+using StockFighter.Gamemaster.Responses;
+using StockFighter.Common;
 
-namespace StockFighter
+namespace StockFighter.Gamemaster
 {
     /// <summary>
     /// Wraps Gamemaster API functions.

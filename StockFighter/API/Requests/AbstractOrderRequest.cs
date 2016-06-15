@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockFighter.Requests
+using StockFighter.Common;
+
+namespace StockFighter.API.Requests
 {
     /// <summary>
     /// Represents the base of an OrderRequest.

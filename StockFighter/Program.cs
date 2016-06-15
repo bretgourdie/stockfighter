@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using StockFighter.API;
+using StockFighter.API.Requests;
+using StockFighter.Gamemaster;
+
 namespace StockFighter
 {
     class Program
@@ -62,7 +66,7 @@ namespace StockFighter
                         }
 
                         // Attempt to buy 100 shares
-                        var orderRequest = new Requests.OrderRequest(
+                        var orderRequest = new OrderRequest(
                             account,
                             venue,
                             stock.symbol,

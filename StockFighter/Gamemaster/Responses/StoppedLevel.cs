@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockFighter.Requests
+using StockFighter.Common;
+
+namespace StockFighter.Gamemaster.Responses
 {
     /// <summary>
-    /// Base class for all requests. Should be used for commonalities.
+    /// Deserialized response to a stop level command.
     /// </summary>
-    public class APIRequest
+    public class StoppedLevel : APIResponse
     {
     }
 }

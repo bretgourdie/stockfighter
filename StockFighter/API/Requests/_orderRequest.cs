@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockFighter.Requests
+namespace StockFighter.API.Requests
 {
     /// <summary>
     /// Deserialized representation of an Order post.

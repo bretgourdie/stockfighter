@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockFighter.Responses
+namespace StockFighter.Common
 {
     /// <summary>
-    /// Deserialized response to a stop level command.
+    /// Base class for all requests. Should be used for commonalities.
     /// </summary>
-    public class StoppedLevel : APIResponse
+    public class APIRequest
     {
     }
 }
