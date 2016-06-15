@@ -23,6 +23,19 @@ namespace StockFighter
                 var instanceId = levelInfo.instanceId;
                 var venues = levelInfo.venues;
 
+                Console.Write("Stopping level... ");
+                var stoppedLevel = gamemaster.StopLevel(instanceId);
+
+                Console.WriteLine(stoppedLevel.ok);
+
+                Console.Write("Resuming level... ");
+                var resumedLevel = gamemaster.ResumeLevel(instanceId);
+                Console.WriteLine(resumedLevel.ok);
+
+                Console.Write("Restarting level... ");
+                var restartedLevel = gamemaster.RestartLevel(instanceId);
+                Console.WriteLine(restartedLevel.ok);
+
                 Console.WriteLine(
                     "instanceId: " + instanceId
                     + "account: " + account);
