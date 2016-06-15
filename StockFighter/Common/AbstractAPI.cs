@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using RestSharp;
-using StockFighter.Requests;
 using System.Configuration;
 
 namespace StockFighter.Common
