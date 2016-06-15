@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using RestSharp.Deserializers;
+using StockFighter.Common;
 
-namespace StockFighter.Responses
+namespace StockFighter.Gamemaster.Responses
 {
     /// <summary>
     /// Response from starting a StockFighter level.
