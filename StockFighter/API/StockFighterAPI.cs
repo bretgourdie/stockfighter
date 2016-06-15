@@ -8,10 +8,11 @@ using RestSharp;
 using RestSharp.Authenticators;
 using System.Net.Http;
 using System.Configuration;
-using StockFighter.Responses;
-using StockFighter.Requests;
+using StockFighter.Common;
+using StockFighter.API.Responses;
+using StockFighter.API.Requests;
 
-namespace StockFighter
+namespace StockFighter.API
 {
     /// <summary>
     /// Wraps Stockfighter API functions.

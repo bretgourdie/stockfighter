@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockFighter
+namespace StockFighter.API
 {
     /// <summary>
     /// Type of order.
