@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockFighter.Responses
+using StockFighter.Common;
+
+namespace StockFighter.API.Responses
 {
     /// <summary>
     /// A client-facing version of an OrderResponse.
