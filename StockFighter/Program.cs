@@ -26,6 +26,7 @@ namespace StockFighter
                 Console.WriteLine(bStar + level1.ToString() + " was solved!" + eStar);
             }
 
+            Console.ReadKey(true);
         }
     }
 }

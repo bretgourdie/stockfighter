@@ -61,7 +61,7 @@ namespace StockFighter.Solutions
 
                 Console.WriteLine(
                     "instanceId: " + instanceId
-                    + "account: " + account);
+                    + "\naccount: " + account);
                 
 
                 foreach (var venue in venues)
