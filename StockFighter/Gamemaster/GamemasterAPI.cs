@@ -19,7 +19,8 @@ namespace StockFighter.Gamemaster
         /// Creates a GamemasterAPI with the specified apiKey.
         /// </summary>
         /// <param name="apiKey">The API Key to use for authentication.</param>
-        public GamemasterAPI(string apiKey) : base(apiKey) { }
+        public GamemasterAPI(string apiKey) 
+            : base(apiKey) { }
 
         /// <summary>
         /// URL for interfacing with the Gamemaster API.

@@ -17,7 +17,7 @@ namespace StockFighter.Solutions
         /// <summary>
         /// The assigned APIKey for the level
         /// </summary>
-        protected string apiKey { get; protected set; }
+        protected string apiKey { get; set; }
 
         /// <summary>
         /// Creates an initialized First_Steps solution using the specified API key.

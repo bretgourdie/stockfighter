@@ -23,7 +23,8 @@ namespace StockFighter.API
         /// Creates a StockFighterAPI object with the specified API Key.
         /// </summary>
         /// <param name="apiKey">The API key to authorize with.</param>
-        public StockFighterAPI(string apiKey) : base(apiKey) { }
+        public StockFighterAPI(string apiKey)
+            : base(apiKey) { }
 
         /// <summary>
         /// URL for interfacing with the StockFighter API.
@@ -34,14 +35,6 @@ namespace StockFighter.API
         /// Authorization parameter name for StockFighter API calls.
         /// </summary>
         protected override string authorizationParameterName { get { return @"X-Starfighter-Authorization"; } }
-
-        /// <summary>
-        /// Initializes the APIWrapper.
-        /// </summary>
-        public StockFighterAPI()
-        {
-            commandDictionary = getCommandDictionary();
-        }
 
         #region API Calls
 
