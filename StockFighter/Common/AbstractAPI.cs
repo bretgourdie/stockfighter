@@ -32,11 +32,6 @@ namespace StockFighter.Common
         protected Dictionary<Type, string> commandDictionary;
 
         /// <summary>
-        /// The internal API Key.
-        /// </summary>
-        private string _apiKey;
-
-        /// <summary>
         /// The API Key to use for the API instance.
         /// </summary>
         public string APIKey { get; private set; }
@@ -48,7 +43,7 @@ namespace StockFighter.Common
         public AbstractAPI(string apiKey)
         {
             commandDictionary = getCommandDictionary();
-            _apiKey = apiKey;
+            this.APIKey = apiKey;
         }
 
         /// <summary>
