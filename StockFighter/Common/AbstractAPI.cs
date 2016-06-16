@@ -32,25 +32,9 @@ namespace StockFighter.Common
         protected Dictionary<Type, string> commandDictionary;
 
         /// <summary>
-        /// The internal API Key.
-        /// </summary>
-        private string _apiKey;
-
-        /// <summary>
         /// The API Key to use for the API instance.
         /// </summary>
-        public string APIKey
-        {
-            get
-            {
-                return _apiKey;
-            }
-        }
-
-        /// <summary>
-        /// Initializes an API with the default API Key in App.config.
-        /// </summary>
-        public AbstractAPI() : this(AbstractAPI.getDefaultAPIKey()) { }
+        public string APIKey { get; private set; }
 
         /// <summary>
         /// Initializes an API with the specified API Key.
@@ -59,7 +43,7 @@ namespace StockFighter.Common
         public AbstractAPI(string apiKey)
         {
             commandDictionary = getCommandDictionary();
-            _apiKey = apiKey;
+            this.APIKey = apiKey;
         }
 
         /// <summary>
@@ -67,15 +51,6 @@ namespace StockFighter.Common
         /// </summary>
         /// <returns>Returns an initialized dictionary of API commands.</returns>
         protected abstract Dictionary<Type, string> getCommandDictionary();
-
-        /// <summary>
-        /// Gets the default API Key: the "apiKey" value from App.config.
-        /// </summary>
-        /// <returns>Returns the default API Key.</returns>
-        protected static string getDefaultAPIKey()
-        {
-            return ConfigurationManager.AppSettings["apiKey"];
-        }
 
         /// <summary>
         /// Assembles a client with the default API key.

@@ -20,6 +20,13 @@ namespace StockFighter.API
     public class StockFighterAPI : AbstractAPI
     {
         /// <summary>
+        /// Creates a StockFighterAPI object with the specified API Key.
+        /// </summary>
+        /// <param name="apiKey">The API key to authorize with.</param>
+        public StockFighterAPI(string apiKey)
+            : base(apiKey) { }
+
+        /// <summary>
         /// URL for interfacing with the StockFighter API.
         /// </summary>
         protected override string url { get { return @"https://api.stockfighter.io/ob/api"; } }
@@ -30,11 +37,22 @@ namespace StockFighter.API
         protected override string authorizationParameterName { get { return @"X-Starfighter-Authorization"; } }
 
         /// <summary>
-        /// Initializes the APIWrapper.
+        /// Initializes a dictionary of StockFighter API commands and returns it.
         /// </summary>
-        public StockFighterAPI()
+        /// <returns>Returns an initialized dictionary of StockFighter API commands.</returns>
+        protected override Dictionary<Type, string> getCommandDictionary()
         {
-            commandDictionary = getCommandDictionary();
+            var dict = new Dictionary<Type, string>
+            {
+                { typeof(Heartbeat), "/heartbeat" },
+                { typeof(VenueHeartbeat), "/venues/{0}/heartbeat" },
+                { typeof(VenueStocks), "/venues/{0}/stocks" },
+                { typeof(Orderbook), "/venues/{0}/stocks/{1}" },
+                { typeof(Quote), "/venues/{0}/stocks/{1}/quote" },
+                { typeof(_orderResponse), "/venues/{0}/stocks/{1}/orders" }
+            };
+
+            return dict;
         }
 
         #region API Calls
@@ -158,28 +176,7 @@ namespace StockFighter.API
         }
 
         #endregion
-        #region Privates
 
 
-        /// <summary>
-        /// Initializes a dictionary of StockFighter API commands and returns it.
-        /// </summary>
-        /// <returns>Returns an initialized dictionary of StockFighter API commands.</returns>
-        protected override Dictionary<Type, string> getCommandDictionary()
-        {
-            var dict = new Dictionary<Type, string>
-            {
-                { typeof(Heartbeat), "/heartbeat" },
-                { typeof(VenueHeartbeat), "/venues/{0}/heartbeat" },
-                { typeof(VenueStocks), "/venues/{0}/stocks" },
-                { typeof(Orderbook), "/venues/{0}/stocks/{1}" },
-                { typeof(Quote), "/venues/{0}/stocks/{1}/quote" },
-                { typeof(_orderResponse), "/venues/{0}/stocks/{1}/orders" }
-            };
-
-            return dict;
-        }
-
-        #endregion
     }
 }

@@ -16,6 +16,13 @@ namespace StockFighter.Gamemaster
     public class GamemasterAPI : AbstractAPI
     {
         /// <summary>
+        /// Creates a GamemasterAPI with the specified apiKey.
+        /// </summary>
+        /// <param name="apiKey">The API Key to use for authentication.</param>
+        public GamemasterAPI(string apiKey) 
+            : base(apiKey) { }
+
+        /// <summary>
         /// URL for interfacing with the Gamemaster API.
         /// </summary>
         protected override string url { get { return @"https://www.stockfighter.io/gm"; } }
@@ -41,6 +48,8 @@ namespace StockFighter.Gamemaster
 
             return dict;
         }
+
+        #region API Calls
 
         /// <summary>
         /// Start the specified level.
@@ -104,6 +113,8 @@ namespace StockFighter.Gamemaster
             }
             return details;
         }
+
+        #endregion
 
         /// <summary>
         /// Helper method to reduce code in instance-affecting response methods.
