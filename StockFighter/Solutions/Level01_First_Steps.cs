@@ -12,22 +12,30 @@ namespace StockFighter.Solutions
     /// <summary>
     /// The solution to the first level, First_Steps.
     /// </summary>
-    public class Level01_First_Steps : ISolvable
+    public class Level01_First_Steps : ISolvable<Level01_First_Steps>
     {
         /// <summary>
         /// The assigned APIKey for the level
         /// </summary>
-        public string APIKey { get; private set; }
+        protected string apiKey { get; protected set; }
 
+        /// <summary>
+        /// Creates an initialized First_Steps solution using the specified API key.
+        /// </summary>
+        /// <param name="apiKey">The API key to use for the level.</param>
         public Level01_First_Steps(string apiKey)
         {
-
+            this.apiKey = apiKey;
         }
 
+        /// <summary>
+        /// Solves the level First_Steps.
+        /// </summary>
+        /// <returns>Returns if the level was solved or not.</returns>
         public bool Solve()
         {
-            var wrapper = new StockFighterAPI();
-            var gamemaster = new GamemasterAPI();
+            var wrapper = new StockFighterAPI(this.apiKey);
+            var gamemaster = new GamemasterAPI(this.apiKey);
 
             try
             {
