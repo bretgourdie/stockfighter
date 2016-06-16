@@ -76,6 +76,7 @@
     <Compile Include="API\Responses\VenueHeartbeat.cs" />
     <Compile Include="API\Responses\VenueStocks.cs" />
     <Compile Include="API\Responses\_orderResponse.cs" />
+    <Compile Include="Solutions\ISolvable.cs" />
     <Compile Include="Solutions\Level01_First_Steps.cs" />
   </ItemGroup>
   <ItemGroup>
