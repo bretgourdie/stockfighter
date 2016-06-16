@@ -11,5 +11,11 @@
         /// </summary>
         /// <returns>Returns if the level was solved or not.</returns>
         bool Solve();
+
+        /// <summary>
+        /// Provide the name of the level in string form.
+        /// </summary>
+        /// <returns>Returns the name of the level.</returns>
+        string ToString();
     }
 }
