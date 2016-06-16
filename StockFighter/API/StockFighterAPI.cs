@@ -20,6 +20,12 @@ namespace StockFighter.API
     public class StockFighterAPI : AbstractAPI
     {
         /// <summary>
+        /// Creates a StockFighterAPI object with the specified API Key.
+        /// </summary>
+        /// <param name="apiKey">The API key to authorize with.</param>
+        public StockFighterAPI(string apiKey) : base(apiKey) { }
+
+        /// <summary>
         /// URL for interfacing with the StockFighter API.
         /// </summary>
         protected override string url { get { return @"https://api.stockfighter.io/ob/api"; } }
