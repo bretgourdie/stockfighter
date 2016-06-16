@@ -39,13 +39,7 @@ namespace StockFighter.Common
         /// <summary>
         /// The API Key to use for the API instance.
         /// </summary>
-        public string APIKey
-        {
-            get
-            {
-                return _apiKey;
-            }
-        }
+        public string APIKey { get; private set; }
 
         /// <summary>
         /// Initializes an API with the specified API Key.
