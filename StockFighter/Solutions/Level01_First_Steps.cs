@@ -42,6 +42,9 @@ namespace StockFighter.Solutions
             var wrapper = new StockFighterAPI(this.apiKey);
             var gamemaster = new GamemasterAPI(this.apiKey);
 
+            var targetNumberOfShares = 100;
+            var solved = false;
+
             try
             {
                 Console.Write("Starting level... ");
@@ -90,25 +93,42 @@ namespace StockFighter.Solutions
                             Console.WriteLine("\t\t" + ask.qty + " @ $" + ask.price);
                         }
 
-                        // Attempt to buy 100 shares
+                        Console.Write("\tAttempting to buy "
+                        + targetNumberOfShares
+                        + " shares of \"" + stock.symbol + "\"... ");
+
+                        // Attempt to buy targetNumberOfShares shares
                         var orderRequest = new API.Requests.OrderRequest(
                             account,
                             venue,
                             stock.symbol,
                             0,
-                            100,
+                            targetNumberOfShares,
                             OrderDirection.Buy,
                             OrderType.Market);
 
                         var orderResponse = wrapper.PostOrder(orderRequest);
                         if (orderResponse != null && orderResponse.fills.Count > 0)
                         {
-                            Console.WriteLine("\tFills:");
+                            Console.WriteLine("bought!");
+
+                            var totalFilled = 0;
 
                             foreach (var fill in orderResponse.fills)
                             {
+                                Console.WriteLine("\tFills:");
                                 Console.WriteLine("\t\t" + fill.qty + " @ $" + fill.price);
+                                totalFilled += fill.qty;
                             }
+
+                            if (totalFilled == targetNumberOfShares)
+                            {
+                                solved = true;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("error!\n\t" + orderResponse.error);
                         }
                     }
                 }
@@ -118,6 +138,8 @@ namespace StockFighter.Solutions
             {
                 Console.WriteLine(ex.Message);
             }
+
+            return solved;
         }
     }
 }
