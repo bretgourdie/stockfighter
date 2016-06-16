@@ -49,6 +49,8 @@ namespace StockFighter.Gamemaster
             return dict;
         }
 
+        #region API Calls
+
         /// <summary>
         /// Start the specified level.
         /// </summary>
@@ -111,6 +113,8 @@ namespace StockFighter.Gamemaster
             }
             return details;
         }
+
+        #endregion
 
         /// <summary>
         /// Helper method to reduce code in instance-affecting response methods.
