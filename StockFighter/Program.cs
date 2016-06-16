@@ -14,9 +14,18 @@ namespace StockFighter
         static void Main(string[] args)
         {
             var apiKey = ConfigurationManager.AppSettings["apiKey"];
+            var bStar = "***** ";
+            var eStar = " *****";
 
             var level1 = new Level01_First_Steps(apiKey);
-            level1.Solve();
+            Console.WriteLine(bStar + " Starting " + level1.ToString() + eStar);
+            var solved = level1.Solve();
+
+            if (solved)
+            {
+                Console.WriteLine(bStar + level1.ToString() + " was solved!" + eStar);
+            }
+
         }
     }
 }

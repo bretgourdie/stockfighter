@@ -28,6 +28,11 @@ namespace StockFighter.Solutions
             this.apiKey = apiKey;
         }
 
+        public override string ToString()
+        {
+            return "Level 01: First Steps";
+        }
+
         /// <summary>
         /// Solves the level First_Steps.
         /// </summary>
