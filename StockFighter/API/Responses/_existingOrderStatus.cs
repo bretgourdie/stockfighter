@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace StockFighter.API.Responses
 {
     /// <summary>
-    /// Internal representation of an OrderResponse.
+    /// Internal representation of an ExistingOrderStatus.
     /// </summary>
-    internal class _orderResponse : AbstractOrderResponse<string, string>
+    internal class _existingOrderStatus : AbstractOrderResponse<string, string>
     {
         /// <summary>
         /// A stringified version of the order's direction.
@@ -19,7 +19,5 @@ namespace StockFighter.API.Responses
         /// A stringified version of the order's type.
         /// </summary>
         public override string orderType { get; set; }
-
-        public _orderResponse() { }
     }
 }
