@@ -175,6 +175,31 @@ namespace StockFighter.API
             }
         }
 
+        /// <summary>
+        /// Retrieve the status about an existing order.
+        /// </summary>
+        /// <param name="orderId">The order's ID.</param>
+        /// <param name="venue">The venue for the order's stock.</param>
+        /// <param name="stock">The symbol for the order's stock.</param>
+        /// <returns>Returns information about the existing order.</returns>
+        public ExistingOrderStatus GetOrderStatus(int orderId, string venue, string stock)
+        {
+            var orderStatus = getResponse<_existingOrderStatus>(
+                new string[] { orderId.ToString(), venue, stock });
+
+            if (orderStatus != null)
+            {
+                var clientOrderStatus = new ExistingOrderStatus(orderStatus);
+
+                return clientOrderStatus;
+            }
+
+            else
+            {
+                throw new ArgumentException("Invalid Order.");
+            }
+        }
+
         #endregion
 
 
