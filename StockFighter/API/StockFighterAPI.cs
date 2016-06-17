@@ -49,7 +49,8 @@ namespace StockFighter.API
                 { typeof(VenueStocks), "/venues/{0}/stocks" },
                 { typeof(Orderbook), "/venues/{0}/stocks/{1}" },
                 { typeof(Quote), "/venues/{0}/stocks/{1}/quote" },
-                { typeof(_orderResponse), "/venues/{0}/stocks/{1}/orders" }
+                { typeof(_orderResponse), "/venues/{0}/stocks/{1}/orders" },
+                { typeof(_existingOrderStatus), "/venues/{0}/stocks/{1}/orders/{2}"}
             };
 
             return dict;
@@ -185,7 +186,7 @@ namespace StockFighter.API
         public ExistingOrderStatus GetOrderStatus(int orderId, string venue, string stock)
         {
             var orderStatus = getResponse<_existingOrderStatus>(
-                new string[] { orderId.ToString(), venue, stock });
+                new string[] { venue, stock, orderId.ToString() });
 
             if (orderStatus != null)
             {
