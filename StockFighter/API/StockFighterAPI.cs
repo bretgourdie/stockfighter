@@ -50,7 +50,8 @@ namespace StockFighter.API
                 { typeof(Orderbook), "/venues/{0}/stocks/{1}" },
                 { typeof(Quote), "/venues/{0}/stocks/{1}/quote" },
                 { typeof(_orderResponse), "/venues/{0}/stocks/{1}/orders" },
-                { typeof(_existingOrderStatus), "/venues/{0}/stocks/{1}/orders/{2}"}
+                { typeof(_existingOrderStatus), "/venues/{0}/stocks/{1}/orders/{2}"},
+                { typeof(_cancelledOrder), "/venues/{0}/stocks/{1}/orders/{2}"}
             };
 
             return dict;
