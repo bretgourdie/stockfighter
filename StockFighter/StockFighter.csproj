@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Responses\ExistingOrderStatus.cs" />
+    <Compile Include="API\Responses\_existingOrderStatus.cs" />
     <Compile Include="Common\AbstractAPI.cs" />
     <Compile Include="Gamemaster\GamemasterAPI.cs" />
     <Compile Include="Gamemaster\Responses\InstanceDetails.cs" />

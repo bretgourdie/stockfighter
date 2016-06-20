@@ -46,15 +46,6 @@ namespace StockFighter.API.Requests
             int price,
             int qty,
             OrderDirection direction,
-            OrderType ordertype)
-        {
-            this.account = account;
-            this.venue = venue;
-            this.stock = stock;
-            this.price = price;
-            this.qty = qty;
-            this.direction = direction;
-            this.orderType = ordertype;
-        }
+            OrderType ordertype) : base(account, venue, stock, price, qty, direction, ordertype) { }
     }
 }
