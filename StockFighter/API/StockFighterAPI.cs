@@ -202,6 +202,31 @@ namespace StockFighter.API
             }
         }
 
+        /// <summary>
+        /// Cancels the specified order.
+        /// </summary>
+        /// <param name="orderId">The order's ID.</param>
+        /// <param name="venue">The venue for the order's stock.</param>
+        /// <param name="stock">The symbol for the order's stock.</param>
+        /// <returns>Returns information about the cancelled order.</returns>
+        public CancelledOrder CancelOrder(int orderId, string venue, string stock)
+        {
+            var cancelledOrder = deleteResponse<_cancelledOrder>(
+                new string[] { venue, stock, orderId.ToString() });
+
+            if (cancelledOrder != null)
+            {
+                var clientCancelledOrder = new CancelledOrder(cancelledOrder);
+
+                return clientCancelledOrder;
+            }
+
+            else
+            {
+                throw new ArgumentException("Could not cancel order.");
+            }
+        }
+
         #endregion
 
 
