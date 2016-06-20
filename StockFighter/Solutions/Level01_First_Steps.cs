@@ -47,6 +47,7 @@ namespace StockFighter.Solutions
             var gamemaster = new GamemasterAPI(this.apiKey);
 
             var targetNumberOfShares = 100;
+            var totalBought = 0;
             var solved = false;
 
             try
@@ -101,38 +102,59 @@ namespace StockFighter.Solutions
                         + targetNumberOfShares
                         + " shares of \"" + stock.symbol + "\"... ");
 
-                        // Attempt to buy targetNumberOfShares shares
-                        var orderRequest = new API.Requests.OrderRequest(
-                            account,
-                            venue,
-                            stock.symbol,
-                            0,
-                            targetNumberOfShares,
-                            OrderDirection.Buy,
-                            OrderType.Market);
-
-                        var orderResponse = wrapper.PostOrder(orderRequest);
-                        if (orderResponse != null && orderResponse.fills.Count > 0)
+                        while (totalBought < targetNumberOfShares)
                         {
-                            Console.WriteLine("bought!");
+                            // Attempt to buy targetNumberOfShares shares
+                            var orderRequest = new API.Requests.OrderRequest(
+                                account,
+                                venue,
+                                stock.symbol,
+                                0,
+                                targetNumberOfShares - totalBought,
+                                OrderDirection.Buy,
+                                OrderType.Market);
 
-                            var totalFilled = 0;
-
-                            foreach (var fill in orderResponse.fills)
+                            var orderResponse = wrapper.PostOrder(orderRequest);
+                            if (orderResponse != null && orderResponse.fills.Count > 0)
                             {
-                                Console.WriteLine("\tFills:");
-                                Console.WriteLine("\t\t" + fill.qty + " @ $" + fill.price);
-                                totalFilled += fill.qty;
+                                Console.WriteLine("order accepted!");
+
+                                var orderCheck = wrapper.GetOrderStatus(
+                                    orderResponse.id, 
+                                    orderResponse.venue, 
+                                    orderResponse.symbol);
+
+                                var totalFilled = 0;
+
+                                foreach (var fill in orderResponse.fills)
+                                {
+                                    Console.WriteLine("\tFills:");
+                                    Console.WriteLine("\t\t" + fill.qty + " @ $" + fill.price);
+                                    totalFilled += fill.qty;
+                                }
+
+                                Console.WriteLine("\tBought " + totalFilled + " shares!");
+                                Console.WriteLine("\n\tOrder is open? \"" + orderCheck.open + "\".\n");
+
+                                totalBought += totalFilled;
+
+                                if (totalBought == targetNumberOfShares)
+                                {
+                                    solved = true;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Couldn't buy!\n\t" + orderResponse.error);
                             }
 
-                            if (totalFilled == targetNumberOfShares)
-                            {
-                                solved = true;
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("error!\n\t" + orderResponse.error);
+                            Console.WriteLine("Progress so far: "
+                                + totalBought
+                                + "/"
+                                + targetNumberOfShares
+                                + " (" 
+                                + (totalBought / targetNumberOfShares * 100)
+                                + "%)");
                         }
                     }
                 }

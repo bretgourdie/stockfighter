@@ -99,7 +99,7 @@ namespace StockFighter.Common
         /// <returns>Returns the response as T or null if invalid.</returns>
         protected T getResponse<T>(ParameterType authParameterType, params string[] args) where T : new()
         {
-            return performCommand<T>(null, Method.GET, ParameterType.Cookie, this.APIKey, args);
+            return performCommand<T>(null, Method.GET, authParameterType, this.APIKey, args);
         }
 
         /// <summary>
