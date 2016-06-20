@@ -79,6 +79,12 @@ namespace StockFighter.Common
             return performCommand<T>(post, Method.POST, authParameterType, this.APIKey, args);
         }
 
+        /// <summary>
+        /// Executes a "delete" command and returns an expected response.
+        /// </summary>
+        /// <typeparam name="T">The response to return.</typeparam>
+        /// <param name="args">REST parameters, if needed.</param>
+        /// <returns>Returns a response in the form of T or null if invalid.</returns>
         protected T deleteResponse<T>(
             params string[] args) where T : new()
         {
