@@ -40,7 +40,7 @@ namespace StockFighter.Common
         /// Initializes an API with the specified API Key.
         /// </summary>
         /// <param name="apiKey">The API Key to authorize with.</param>
-        public AbstractAPI(string apiKey)
+        internal AbstractAPI(string apiKey)
         {
             commandDictionary = getCommandDictionary();
             this.APIKey = apiKey;
