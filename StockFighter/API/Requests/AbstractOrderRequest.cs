@@ -66,7 +66,7 @@ namespace StockFighter.API.Requests
         /// <param name="qty">The desired quantity.</param>
         /// <param name="direction">The direction of the order.</param>
         /// <param name="ordertype">The type of order.</param>
-        public AbstractOrderRequest(
+        internal AbstractOrderRequest(
             string account,
             string venue,
             string stock,
