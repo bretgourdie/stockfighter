@@ -227,6 +227,30 @@ namespace StockFighter.API
             }
         }
 
+        /// <summary>
+        /// Retrieves the status of all existing orders.
+        /// </summary>
+        /// <param name="venue">The venue for the order's stock.</param>
+        /// <param name="account">The account to retrieve the orders for.</param>
+        /// <returns>Returns information about all existing orders.</returns>
+        public AllExistingOrderStatuses GetAllOrderStatuses(string venue, string account)
+        {
+            var existingOrders = getResponse<_allExistingOrderStatuses>(
+                new string[] { venue, account });
+
+            if (existingOrders != null)
+            {
+                var clientExistingOrders = new AllExistingOrderStatuses(existingOrders);
+
+                return clientExistingOrders;
+            }
+
+            else
+            {
+                throw new ArgumentException("Could not get status of all orders.");
+            }
+        }
+
         #endregion
 
 
