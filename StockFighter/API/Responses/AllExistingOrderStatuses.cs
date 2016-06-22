@@ -20,6 +20,10 @@ namespace StockFighter.API.Responses
         /// </summary>
         public List<ExistingOrderStatus> orders { get; set; }
 
+        /// <summary>
+        /// Creates a forward-facing set of existing orders from the internal representation.
+        /// </summary>
+        /// <param name="existingOrderStatuses">The API response of All Existing Orders.</param>
         internal AllExistingOrderStatuses(_allExistingOrderStatuses existingOrderStatuses)
         {
             this.venue = existingOrderStatuses.venue;
