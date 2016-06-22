@@ -19,5 +19,17 @@ namespace StockFighter.API.Responses
         /// The status of each order.
         /// </summary>
         public List<ExistingOrderStatus> orders { get; set; }
+
+        internal AllExistingOrderStatuses(_allExistingOrderStatuses existingOrderStatuses)
+        {
+            this.venue = existingOrderStatuses.venue;
+
+            this.orders = new List<ExistingOrderStatus>();
+
+            foreach (var existingOrder in existingOrderStatuses.orders)
+            {
+                orders.Add(new ExistingOrderStatus(existingOrder));
+            }
+        }
     }
 }
