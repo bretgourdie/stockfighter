@@ -54,6 +54,7 @@
     <Compile Include="API\Responses\CancelledOrder.cs" />
     <Compile Include="API\Responses\ExistingOrderStatus.cs" />
     <Compile Include="API\Responses\_allExistingOrderStatuses.cs" />
+    <Compile Include="API\Responses\_allExistingOrderStatusesForStock.cs" />
     <Compile Include="API\Responses\_cancelledOrder.cs" />
     <Compile Include="API\Responses\_existingOrderStatus.cs" />
     <Compile Include="Common\AbstractAPI.cs" />

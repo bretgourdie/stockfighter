@@ -52,7 +52,8 @@ namespace StockFighter.API
                 { typeof(_orderResponse), "/venues/{0}/stocks/{1}/orders" },
                 { typeof(_existingOrderStatus), "/venues/{0}/stocks/{1}/orders/{2}"},
                 { typeof(_cancelledOrder), "/venues/{0}/stocks/{1}/orders/{2}"},
-                { typeof(_allExistingOrderStatuses), "/venues/{0}/accounts/{1}/orders"}
+                { typeof(_allExistingOrderStatuses), "/venues/{0}/accounts/{1}/orders"},
+                { typeof(_allExistingOrderStatusesForStock), "/venues/{0}/accounts/{1}/stocks/{2}/orders"}
             };
 
             return dict;
@@ -249,6 +250,32 @@ namespace StockFighter.API
             else
             {
                 throw new ArgumentException("Could not get status of all orders.");
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the status of all existing orders for a particular stock.
+        /// </summary>
+        /// <param name="venue">The venue for the order's stock.</param>
+        /// <param name="account">The account to retrieve the orders for.</param>
+        /// <param name="stock">The stock to retrieve the orders for.</param>
+        /// <returns>Returns information about all existing orders.</returns>
+        public AllExistingOrderStatuses GetAllOrderStatuses(string venue, string account, string stock)
+        {
+            var existingOrders = getResponse<_allExistingOrderStatusesForStock>(
+                new string[] { venue, account, stock });
+
+            if (existingOrders != null)
+            {
+                var clientExistingOrders = new AllExistingOrderStatuses(existingOrders);
+
+                return clientExistingOrders;
+            }
+
+            else
+            {
+                throw new ArgumentException("Could not get status of all orders for stock \""
+                    + stock + "\".");
             }
         }
 
