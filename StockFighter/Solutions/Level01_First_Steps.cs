@@ -37,6 +37,14 @@ namespace StockFighter.Solutions
             return "Level 01: First Steps";
         }
 
+        public string LevelName
+        {
+            get
+            {
+                return "first_steps";
+            }
+        }
+
         /// <summary>
         /// Solves the level First_Steps.
         /// </summary>
@@ -53,7 +61,7 @@ namespace StockFighter.Solutions
             try
             {
                 Console.Write("Starting level... ");
-                var levelInfo = gamemaster.StartLevel("first_steps");
+                var levelInfo = gamemaster.StartLevel(this.LevelName);
                 Console.WriteLine(levelInfo.ok + "!");
 
                 var account = levelInfo.account;
