@@ -53,6 +53,22 @@ namespace StockFighter.Solutions
             var sharesToSell = 100000;
             var solved = false;
 
+            try
+            {
+
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+            Console.Write("Starting level... ");
+            var levelInfo = gamemaster.StartLevel(this.LevelName);
+            Console.WriteLine(levelInfo.ok + "!");
+
+            var account = levelInfo.account;
+            var instanceId = levelInfo.instanceId;
+
             return solved;
         }
     }
