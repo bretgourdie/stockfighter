@@ -13,9 +13,15 @@
         bool Solve();
 
         /// <summary>
-        /// Provide the name of the level in string form.
+        /// Provide the formatted name of the level in string form.
         /// </summary>
         /// <returns>Returns the name of the level.</returns>
         string ToString();
+
+        /// <summary>
+        /// Provides the name of the level for the REST call.
+        /// </summary>
+        /// <returns>Returns the name of the level for the REST call.</returns>
+        string LevelName { get; }
     }
 }
