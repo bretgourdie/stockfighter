@@ -11,6 +11,13 @@ namespace StockFighter.Solutions
     /// </summary>
     public class Level02_Chock_A_Block : ISolvable<Level02_Chock_A_Block>
     {
-
+        /// <summary>
+        /// Return the name of the level.
+        /// </summary>
+        /// <returns>Returns the name of the level.</returns>
+        public override string ToString()
+        {
+            return "Level 02: Chock A Block";
+        }
     }
 }
