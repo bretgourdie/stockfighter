@@ -19,5 +19,14 @@ namespace StockFighter.Solutions
         {
             return "Level 02: Chock A Block";
         }
+
+        /// <summary>
+        /// Solves the level Chock_A_Block.
+        /// </summary>
+        /// <returns>Returns if the level was solved or not.</returns>
+        public bool Solve()
+        {
+
+        }
     }
 }
