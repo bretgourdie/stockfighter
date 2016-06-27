@@ -15,6 +15,9 @@ namespace StockFighter.Solutions
     /// </summary>
     public class Level02_Chock_A_Block : ISolvable
     {
+        /// <summary>
+        /// The assigned APIKey for the level.
+        /// </summary>
         protected string apiKey { get; set; }
 
         /// <summary>
