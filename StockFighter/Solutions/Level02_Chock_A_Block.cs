@@ -85,7 +85,14 @@ namespace StockFighter.Solutions
 
                             var quantity = Math.Min(sharesToBuy, buyingInterval);
 
-                            Console.Write("Attempting to order " + quantity + " shares... ");
+                            var now = DateTime.Now;
+
+                            Console.Write(
+                                "Attempting to order "
+                                + quantity
+                                + " shares @ "
+                                + DateTime.Now.ToString("HH:mm:ss.fff")
+                                + "... ");
 
                             var order = new OrderRequest(
                                 account,
