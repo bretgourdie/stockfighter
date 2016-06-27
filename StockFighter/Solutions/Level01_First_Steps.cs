@@ -12,7 +12,7 @@ namespace StockFighter.Solutions
     /// <summary>
     /// The solution to the first level, First_Steps.
     /// </summary>
-    public class Level01_First_Steps : ISolvable<Level01_First_Steps>
+    public class Level01_First_Steps : ISolvable
     {
         /// <summary>
         /// The assigned APIKey for the level
