@@ -77,7 +77,7 @@ namespace StockFighter.Solutions
                     foreach(var stock in stocks.symbols)
                     {
                         Console.WriteLine("Stock \"" + stock.name + "\" (" + stock.symbol + "):");
-                        var buyingInterval = 100;
+                        var buyingInterval = 50;
                         
                         while (sharesToBuy > 0)
                         {
