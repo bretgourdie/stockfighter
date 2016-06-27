@@ -85,6 +85,7 @@
     <Compile Include="API\Responses\_orderResponse.cs" />
     <Compile Include="Solutions\ISolvable.cs" />
     <Compile Include="Solutions\Level01_First_Steps.cs" />
+    <Compile Include="Solutions\Level02_Chock_A_Block.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

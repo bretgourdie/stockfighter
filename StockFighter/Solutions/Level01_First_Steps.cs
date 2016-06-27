@@ -12,7 +12,7 @@ namespace StockFighter.Solutions
     /// <summary>
     /// The solution to the first level, First_Steps.
     /// </summary>
-    public class Level01_First_Steps : ISolvable<Level01_First_Steps>
+    public class Level01_First_Steps : ISolvable
     {
         /// <summary>
         /// The assigned APIKey for the level
@@ -38,6 +38,17 @@ namespace StockFighter.Solutions
         }
 
         /// <summary>
+        /// The level's name.
+        /// </summary>
+        public string LevelName
+        {
+            get
+            {
+                return "first_steps";
+            }
+        }
+
+        /// <summary>
         /// Solves the level First_Steps.
         /// </summary>
         /// <returns>Returns if the level was solved or not.</returns>
@@ -53,7 +64,7 @@ namespace StockFighter.Solutions
             try
             {
                 Console.Write("Starting level... ");
-                var levelInfo = gamemaster.StartLevel("first_steps");
+                var levelInfo = gamemaster.StartLevel(this.LevelName);
                 Console.WriteLine(levelInfo.ok + "!");
 
                 var account = levelInfo.account;
