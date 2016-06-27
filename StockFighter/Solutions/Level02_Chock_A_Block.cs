@@ -20,7 +20,7 @@ namespace StockFighter.Solutions
         /// <summary>
         /// Creates an initialized Chock_A_Block solution using the specified API key.
         /// </summary>
-        /// <param name="apiKey">The API key to use for th eleve.</param>
+        /// <param name="apiKey">The API key to use for the level.</param>
         public Level02_Chock_A_Block(string apiKey)
         {
             this.apiKey = apiKey;
