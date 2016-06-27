@@ -17,16 +17,25 @@ namespace StockFighter
             var bStar = "***** ";
             var eStar = " *****";
 
-            var level1 = new Level01_First_Steps(apiKey);
-            Console.WriteLine(bStar + " Starting " + level1.ToString() + eStar);
-            var solved = level1.Solve();
-
-            if (solved)
+            var levelCollection = new List<ISolvable>()
             {
-                Console.WriteLine(bStar + level1.ToString() + " was solved!" + eStar);
-            }
+                //new Level01_First_Steps(apiKey),
+                new Level02_Chock_A_Block(apiKey)
+            };
 
-            Console.ReadKey(true);
+            foreach (var level in levelCollection)
+            {
+                Console.WriteLine(bStar + " Starting " + level.ToString() + eStar);
+                var solved = level.Solve();
+
+                if (solved)
+                {
+                    Console.WriteLine(bStar + level.ToString() + " was solved!" + eStar);
+                }
+
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey(true);
+            }
         }
     }
 }
