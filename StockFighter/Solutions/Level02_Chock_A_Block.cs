@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using StockFighter.API;
+using StockFighter.API.Requests;
 using StockFighter.Gamemaster;
 
 namespace StockFighter.Solutions
@@ -50,24 +51,67 @@ namespace StockFighter.Solutions
             var wrapper = new StockFighterAPI(this.apiKey);
             var gamemaster = new GamemasterAPI(this.apiKey);
 
-            var sharesToSell = 100000;
+            var sharesToBuy = 100000;
             var solved = false;
 
             try
             {
+                Console.Write("Starting level... ");
+                var levelInfo = gamemaster.StartLevel(this.LevelName);
+                Console.WriteLine(levelInfo.ok + "!");
 
+                var account = levelInfo.account;
+                var instanceId = levelInfo.instanceId;
+
+                foreach (var venue in levelInfo.venues)
+                {
+                    Console.WriteLine("Venue \"" + venue + "\":");
+                    var stocks = wrapper.GetStocks(venue);
+
+                    foreach(var stock in stocks.symbols)
+                    {
+                        Console.WriteLine("Stock \"" + stock.name + "\" (" + stock.symbol + "):");
+                        var buyingInterval = 100;
+                        
+                        while (sharesToBuy > 0)
+                        {
+                            Console.WriteLine("Shares left to buy: " + sharesToBuy);
+
+                            var quantity = Math.Min(sharesToBuy, buyingInterval);
+
+                            Console.Write("Attempting to order " + quantity + " shares... ");
+
+                            var order = new OrderRequest(
+                                account,
+                                venue,
+                                stock.symbol,
+                                0,
+                                quantity,
+                                OrderDirection.Buy,
+                                OrderType.Market);
+
+                            var response = wrapper.PostOrder(order);
+
+                            var totalFilled = 0;
+                            foreach (var fill in response.fills)
+                            {
+                                totalFilled += fill.qty;
+                            }
+
+                            Console.WriteLine(totalFilled + " filled!");
+
+                            sharesToBuy -= totalFilled;
+                        }
+
+                        Console.WriteLine("All shares bought!");
+                        solved = true;
+                    }
+                }
             }
             catch(Exception ex)
             {
-
+                Console.WriteLine("Error: " + ex.Message);
             }
-
-            Console.Write("Starting level... ");
-            var levelInfo = gamemaster.StartLevel(this.LevelName);
-            Console.WriteLine(levelInfo.ok + "!");
-
-            var account = levelInfo.account;
-            var instanceId = levelInfo.instanceId;
 
             return solved;
         }
