@@ -34,6 +34,9 @@ namespace StockFighter.Solutions
             return "Level 02: Chock A Block";
         }
 
+        /// <summary>
+        /// The level's name.
+        /// </summary>
         public string LevelName
         {
             get

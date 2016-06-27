@@ -37,6 +37,9 @@ namespace StockFighter.Solutions
             return "Level 01: First Steps";
         }
 
+        /// <summary>
+        /// The level's name.
+        /// </summary>
         public string LevelName
         {
             get
