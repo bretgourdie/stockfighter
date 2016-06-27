@@ -20,7 +20,8 @@ namespace StockFighter
             var levelCollection = new List<ISolvable>()
             {
                 //new Level01_First_Steps(apiKey),
-                new Level02_Chock_A_Block(apiKey)
+                //new Level02_Chock_A_Block(apiKey),
+                new Level03_Sell_Side(apiKey)
             };
 
             foreach (var level in levelCollection)
