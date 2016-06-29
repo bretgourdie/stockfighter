@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using StockFighter.API;
+using StockFighter.API.Requests;
+using StockFighter.Gamemaster;
+
 namespace StockFighter.Solutions
 {
     public class Level03_Sell_Side : ISolvable
@@ -15,7 +19,7 @@ namespace StockFighter.Solutions
 
         public string ToString()
         {
-            throw new NotImplementedException();
+            return "Level 03: Sell Side";
         }
 
         public string LevelName
