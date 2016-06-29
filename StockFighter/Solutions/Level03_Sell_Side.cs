@@ -26,9 +26,12 @@ namespace StockFighter.Solutions
             return "Level 03: Sell Side";
         }
 
+        /// <summary>
+        /// The level's name.
+        /// </summary>
         public string LevelName
         {
-            get { throw new NotImplementedException(); }
+            get { return "sell_side"; }
         }
     }
 }
