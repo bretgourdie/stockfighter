@@ -32,6 +32,17 @@ namespace StockFighter.Solutions
             var gamemaster = new GamemasterAPI(this.apiKey);
 
             var solved = false;
+            var remainingProfitToBeMade = 10000;
+
+            try
+            {
+
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
 
             return solved;
         }
