@@ -28,7 +28,12 @@ namespace StockFighter.Solutions
 
         public bool Solve()
         {
-            throw new NotImplementedException();
+            var wrapper = new StockFighterAPI(this.apiKey);
+            var gamemaster = new GamemasterAPI(this.apiKey);
+
+            var solved = false;
+
+            return solved;
         }
 
         /// <summary>
