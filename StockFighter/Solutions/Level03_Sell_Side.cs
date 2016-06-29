@@ -17,6 +17,15 @@ namespace StockFighter.Solutions
         /// </summary>
         protected string apiKey { get; set; }
 
+        /// <summary>
+        /// Creates an initialized Sell_Side solution using the specified API key.
+        /// </summary>
+        /// <param name="apiKey"></param>
+        public Level03_Sell_Side(string apiKey)
+        {
+            this.apiKey = apiKey;
+        }
+
         public bool Solve()
         {
             throw new NotImplementedException();
