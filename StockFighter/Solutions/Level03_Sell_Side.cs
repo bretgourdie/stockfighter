@@ -57,7 +57,11 @@ namespace StockFighter.Solutions
                     foreach(var stock in stocks.symbols)
                     {
                         Console.WriteLine("Stock \"" + stock.name + "\" (" + stock.symbol + "):");
-                        solved &= performLevel(account, stock);
+                        solved &= performLevel(
+                            account, 
+                            stock,
+                            remainingProfitToBeMade,
+                            excessiveRiskMax);
                     }
                 }
             }
