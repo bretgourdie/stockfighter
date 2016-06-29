@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using StockFighter.API;
 using StockFighter.API.Requests;
 using StockFighter.Gamemaster;
+using StockFighter.API.Responses;
 
 namespace StockFighter.Solutions
 {
@@ -37,7 +38,24 @@ namespace StockFighter.Solutions
 
             try
             {
+                Console.Write("Starting level... ");
+                var levelInfo = gamemaster.StartLevel(this.LevelName);
+                Console.WriteLine(levelInfo.ok + "!");
 
+                var account = levelInfo.account;
+                var instanceId = levelInfo.instanceId;
+
+                foreach (var venue in levelInfo.venues)
+                {
+                    Console.WriteLine("Venue \"" + venue + "\":");
+                    var stocks = wrapper.GetStocks(venue);
+
+                    foreach(var stock in stocks)
+                    {
+                        Console.WriteLine("Stock \"" + stock.name + "\" (" + stock.symbol + "):");
+                        solved &= performLevel(account, stock);
+                    }
+                }
             }
 
             catch (Exception ex)
@@ -46,6 +64,15 @@ namespace StockFighter.Solutions
             }
 
             return solved;
+        }
+
+        protected bool performLevel(
+            string account, 
+            VenueStocks.VenueStock stock,
+            int remainingProfitToBeMade,
+            int excessiveRiskMax)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
