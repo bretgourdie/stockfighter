@@ -27,6 +27,10 @@ namespace StockFighter.Solutions
             this.apiKey = apiKey;
         }
 
+        /// <summary>
+        /// Solves the current level.
+        /// </summary>
+        /// <returns>Returns if the level was solved or not.</returns>
         public bool Solve()
         {
             var wrapper = new StockFighterAPI(this.apiKey);
