@@ -33,6 +33,7 @@ namespace StockFighter.Solutions
 
             var solved = false;
             var remainingProfitToBeMade = 10000;
+            var excessiveRiskMax = 1000;
 
             try
             {
