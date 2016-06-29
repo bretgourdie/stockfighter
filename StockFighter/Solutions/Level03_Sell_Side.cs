@@ -12,6 +12,11 @@ namespace StockFighter.Solutions
 {
     public class Level03_Sell_Side : ISolvable
     {
+        /// <summary>
+        /// The assigned APIKey for the level.
+        /// </summary>
+        protected string apiKey { get; set; }
+
         public bool Solve()
         {
             throw new NotImplementedException();
