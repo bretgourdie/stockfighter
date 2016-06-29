@@ -11,6 +11,9 @@ using StockFighter.API.Responses;
 
 namespace StockFighter.Solutions
 {
+    /// <summary>
+    /// The solution to the second level, Sell_Side.
+    /// </summary>
     public class Level03_Sell_Side : ISolvable
     {
         /// <summary>
