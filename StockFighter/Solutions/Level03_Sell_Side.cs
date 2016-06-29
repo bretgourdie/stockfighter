@@ -54,7 +54,7 @@ namespace StockFighter.Solutions
                     Console.WriteLine("Venue \"" + venue + "\":");
                     var stocks = wrapper.GetStocks(venue);
 
-                    foreach(var stock in stocks)
+                    foreach(var stock in stocks.symbols)
                     {
                         Console.WriteLine("Stock \"" + stock.name + "\" (" + stock.symbol + "):");
                         solved &= performLevel(account, stock);
