@@ -17,6 +17,10 @@ namespace StockFighter.Solutions
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Return the name of the level.
+        /// </summary>
+        /// <returns>Returns the name of the level.</returns>
         public string ToString()
         {
             return "Level 03: Sell Side";
